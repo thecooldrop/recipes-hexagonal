@@ -1,5 +1,6 @@
 package udarnicka.recipes.ingredients.domain.api;
 
+import lombok.NonNull;
 import lombok.ToString;
 
 import java.util.Optional;
@@ -8,15 +9,18 @@ import java.util.Optional;
 public class Ingredient {
 
     private String name;
+    private IngredientId id;
 
-    private Ingredient(String name) {
+    private Ingredient(String name, IngredientId id) {
         this.name = name;
+        this.id = id;
     }
 
     // TODO add tests
-    public Optional<Ingredient> tryFrom(String ingredient) {
-        if(ingredient != null && !ingredient.isBlank()) {
-            return Optional.of(new Ingredient(name));
+    public Optional<Ingredient> tryFrom(@NonNull String ingredient,
+                                        @NonNull IngredientId id) {
+        if(!ingredient.isBlank()) {
+            return Optional.of(new Ingredient(name, id));
         }
         return Optional.empty();
     }

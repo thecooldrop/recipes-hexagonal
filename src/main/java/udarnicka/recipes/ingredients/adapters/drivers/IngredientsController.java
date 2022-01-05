@@ -1,4 +1,4 @@
-package udarnicka.recipes.ingredients.adapters.driven;
+package udarnicka.recipes.ingredients.adapters.drivers;
 
 import org.springframework.web.bind.annotation.RestController;
 

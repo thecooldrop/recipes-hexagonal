@@ -1,8 +1,10 @@
 package udarnicka.recipes.ingredients.domain.api;
 
-import lombok.Value;
+import java.util.Objects;
 
-@Value
-public class CreateIngredient {
-    String name;
+public record CreateIngredient(String name) {
+    public CreateIngredient {
+        Objects.requireNonNull(name);
+        if(name.isBlank()) throw new IllegalArgumentException("Name of the ingredient may not be blank");
+    }
 }

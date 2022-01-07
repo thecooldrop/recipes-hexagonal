@@ -20,22 +20,7 @@ class IngredientTest {
     }
 
     @Test
-    void canCreateIngredientFromNonblankIngredientWithNonNullId() {
+    void canCreateIngredientFromNonBlankIngredientWithNonNullId() {
         assertTrue(Ingredient.tryFrom("Flour", new IngredientId(1)).isPresent());
-    }
-
-    @Test
-    void ingredientsNameCaseDoesNotMatterForEquality() {
-        Ingredient flour = Ingredient.tryFrom("Flour", new IngredientId(1)).get();
-        Ingredient flourTwo = Ingredient.tryFrom("flour", new IngredientId(1)).get();
-        assertEquals(flour, flourTwo);
-        "abc".intern()
-    }
-
-    @Test
-    void ingredientsWithSameNameButDifferentIdAreNotTheSame() {
-        Ingredient flour = Ingredient.tryFrom("Flour", new IngredientId(1)).get();
-        Ingredient flourTwo = Ingredient.tryFrom("Flour", new IngredientId(2)).get();
-        assertNotEquals(flour, flourTwo);
     }
 }

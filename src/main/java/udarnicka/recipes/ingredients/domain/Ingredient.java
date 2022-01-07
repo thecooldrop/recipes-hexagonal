@@ -1,10 +1,12 @@
 package udarnicka.recipes.ingredients.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.Optional;
 
 @ToString
+@EqualsAndHashCode
 public class Ingredient {
 
     private String name;
@@ -15,7 +17,6 @@ public class Ingredient {
         this.id = id;
     }
 
-    // TODO add tests
     public static Optional<Ingredient> tryFrom(String ingredient,
                                                IngredientId id) {
         if(ingredient == null || id == null) {
@@ -26,20 +27,4 @@ public class Ingredient {
         }
         return Optional.empty();
     }
-
-    @Override
-    public int hashCode() {
-        return this.name.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if(other instanceof Ingredient) {
-            Ingredient otherIngredient = (Ingredient) other;
-            return this.name.equalsIgnoreCase(otherIngredient.name) &&
-                    this.id.equals(otherIngredient.id);
-        }
-        return false;
-    }
-
 }

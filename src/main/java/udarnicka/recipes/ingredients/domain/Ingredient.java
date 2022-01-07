@@ -1,6 +1,5 @@
 package udarnicka.recipes.ingredients.domain;
 
-import lombok.NonNull;
 import lombok.ToString;
 
 import java.util.Optional;
@@ -17,10 +16,13 @@ public class Ingredient {
     }
 
     // TODO add tests
-    public Optional<Ingredient> tryFrom(@NonNull String ingredient,
-                                        @NonNull IngredientId id) {
+    public static Optional<Ingredient> tryFrom(String ingredient,
+                                               IngredientId id) {
+        if(ingredient == null || id == null) {
+            return Optional.empty();
+        }
         if(!ingredient.isBlank()) {
-            return Optional.of(new Ingredient(name, id));
+            return Optional.of(new Ingredient(ingredient, id));
         }
         return Optional.empty();
     }
@@ -31,12 +33,13 @@ public class Ingredient {
     }
 
     @Override
-    // TODO add test
     public boolean equals(Object other) {
         if(other instanceof Ingredient) {
             Ingredient otherIngredient = (Ingredient) other;
-            return this.name.equalsIgnoreCase(otherIngredient.name);
+            return this.name.equalsIgnoreCase(otherIngredient.name) &&
+                    this.id.equals(otherIngredient.id);
         }
         return false;
     }
+
 }

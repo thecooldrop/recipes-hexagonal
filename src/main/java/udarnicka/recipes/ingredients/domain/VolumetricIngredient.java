@@ -23,6 +23,6 @@ public class VolumetricIngredient {
         if(volume.getValue().doubleValue() <= 0) {
             return Optional.empty();
         }
-        return Optional.of(new VolumetricIngredient(Ingredient, volume))
+        return Optional.of(new VolumetricIngredient(ingredient, volume));
     }
 }

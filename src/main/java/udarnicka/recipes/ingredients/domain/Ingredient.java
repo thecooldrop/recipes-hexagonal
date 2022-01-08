@@ -1,12 +1,14 @@
 package udarnicka.recipes.ingredients.domain;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 
 import java.util.Optional;
 
 @ToString
 @EqualsAndHashCode
+@Getter
 public class Ingredient {
 
     private String name;

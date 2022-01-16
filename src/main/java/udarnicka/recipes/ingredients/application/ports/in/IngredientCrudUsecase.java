@@ -1,7 +1,8 @@
-package udarnicka.recipes.ingredients.domain.api;
+package udarnicka.recipes.ingredients.application.ports.in;
 
 import udarnicka.recipes.ingredients.domain.Ingredient;
 import udarnicka.recipes.ingredients.domain.IngredientId;
+import udarnicka.recipes.ingredients.application.CreateIngredient;
 
 import java.util.Optional;
 

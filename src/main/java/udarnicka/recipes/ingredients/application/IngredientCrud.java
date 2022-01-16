@@ -1,14 +1,16 @@
-package udarnicka.recipes.ingredients.domain;
+package udarnicka.recipes.ingredients.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import udarnicka.recipes.ingredients.domain.api.CreateIngredient;
-import udarnicka.recipes.ingredients.domain.api.IngredientCrudUsecase;
+import udarnicka.recipes.ingredients.application.ports.out.IngredientRepository;
+import udarnicka.recipes.ingredients.application.ports.in.IngredientCrudUsecase;
+import udarnicka.recipes.ingredients.domain.Ingredient;
+import udarnicka.recipes.ingredients.domain.IngredientId;
 
 import java.util.Optional;
 
 @Service
-public class IngredientCrud implements IngredientCrudUsecase {
+class IngredientCrud implements IngredientCrudUsecase {
 
     private final IngredientRepository ingredientRepository;
 

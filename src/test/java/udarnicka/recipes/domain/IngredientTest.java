@@ -1,6 +1,8 @@
-package udarnicka.recipes.ingredients.domain;
+package udarnicka.recipes.domain;
 
 import org.junit.jupiter.api.Test;
+import udarnicka.recipes.domain.Ingredient;
+import udarnicka.recipes.domain.IngredientId;
 
 import java.util.Optional;
 

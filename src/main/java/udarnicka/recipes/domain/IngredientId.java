@@ -1,4 +1,4 @@
-package udarnicka.recipes.ingredients.domain;
+package udarnicka.recipes.domain;
 
 import lombok.NonNull;
 import lombok.Value;

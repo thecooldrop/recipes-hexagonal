@@ -1,4 +1,4 @@
-package udarnicka.recipes.ingredients.application;
+package udarnicka.recipes.application;
 
 import java.util.Objects;
 

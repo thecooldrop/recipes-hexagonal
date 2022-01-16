@@ -1,8 +1,8 @@
-package udarnicka.recipes.ingredients.adapters.rest;
+package udarnicka.recipes.adapters.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-import udarnicka.recipes.ingredients.application.ports.in.IngredientCrudUsecase;
+import udarnicka.recipes.application.ports.in.IngredientCrudUsecase;
 
 @RestController
 public class IngredientsController {

@@ -1,6 +1,7 @@
-package udarnicka.recipes.adapters.persistence;
+package udarnicka.recipes.adapters.persistence.volatilePersistence.ingredients;
 
 import org.junit.jupiter.api.Test;
+import udarnicka.recipes.adapters.persistence.volatilePersistence.ingredients.VolatileMapIngredientRepository;
 import udarnicka.recipes.application.CreateIngredient;
 import udarnicka.recipes.domain.IngredientId;
 

@@ -1,4 +1,4 @@
-package udarnicka.recipes.adapters.persistence;
+package udarnicka.recipes.adapters.persistence.volatilePersistence.ingredients;
 
 import org.springframework.stereotype.Repository;
 import udarnicka.recipes.application.CreateIngredient;

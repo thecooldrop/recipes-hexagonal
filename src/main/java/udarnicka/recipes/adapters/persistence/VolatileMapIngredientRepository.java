@@ -1,6 +1,5 @@
 package udarnicka.recipes.adapters.persistence;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import udarnicka.recipes.application.CreateIngredient;
 import udarnicka.recipes.application.ports.out.IngredientRepository;

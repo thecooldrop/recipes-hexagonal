@@ -21,7 +21,7 @@ class IngredientCrud implements IngredientCrudUsecase {
 
     @Override
     public Ingredient createIngredient(CreateIngredient createIngredient) {
-        return ingredientRepository.save(createIngredient);
+        return ingredientRepository.create(createIngredient);
     }
 
     @Override
@@ -31,6 +31,6 @@ class IngredientCrud implements IngredientCrudUsecase {
 
     @Override
     public Optional<Ingredient> readIngredient(IngredientId ingredientId) {
-        return ingredientRepository.getById(ingredientId);
+        return ingredientRepository.readById(ingredientId);
     }
 }

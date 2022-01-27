@@ -1,62 +1,87 @@
 package udarnicka.recipes.adapters.persistence.volatilePersistence.ingredients;
 
-import org.junit.jupiter.api.Test;
-import udarnicka.recipes.adapters.persistence.volatilePersistence.ingredients.VolatileMapIngredientRepository;
+import jdk.jfr.Description;
+import org.junit.jupiter.api.*;
 import udarnicka.recipes.application.CreateIngredient;
+import udarnicka.recipes.domain.Ingredient;
 import udarnicka.recipes.domain.IngredientId;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class VolatileMapIngredientRepositoryTest {
 
-    /**
-     * If we try to retrieve an ingredient by ID, but we pass in an ID which is
-     * not associated to any ingredient, then we should obtain an empty Optional
-     * as a response
-     */
-    @Test
-    void retrievingAnIngredientByNonExistentIdReturnsEmptyOptional() {
-        var repositoryUnderTest = new VolatileMapIngredientRepository();
-        var nonexistentIngredient = repositoryUnderTest.readById(new IngredientId(1));
-        assertTrue(nonexistentIngredient.isEmpty());
-    }
+    @Nested
+    @Description("If there is a database")
+    public class GivenADatabase {
 
-    /**
-     * When new ingredient is created, then we can retrieve it in the future
-     */
-    @Test
-    void createdIngredientCanBeRetrieved() {
-        var repositoryUnderTest = new VolatileMapIngredientRepository();
-        var createIngredientRequest = new CreateIngredient("Flour");
-        var createdIngredient = repositoryUnderTest.create(createIngredientRequest);
+        private VolatileMapIngredientRepository repositoryUnderTest;
 
-        var maybeRetrievedIngredient = repositoryUnderTest.readById(createdIngredient.getId());
-        assertTrue(maybeRetrievedIngredient.isPresent());
-        var retrievedIngredient = maybeRetrievedIngredient.get();
-        assertEquals(retrievedIngredient, createdIngredient);
-    }
+        @BeforeEach
+        void setup() {
+            repositoryUnderTest = new VolatileMapIngredientRepository();
+        }
 
-    /**
-     * Creating a new Ingredient returns a properly formed new Ingredient object
-     */
-    @Test
-    void creatingAnIngredientReturnsValidIngredientObject() {
-        var repositoryUnderTest = new VolatileMapIngredientRepository();
-        var createIngredientRequest = new CreateIngredient("Flour");
-        var createdIngredient = repositoryUnderTest.create(createIngredientRequest);
+        @Nested
+        @Description("Which is empty")
+        public class WhichIsEmpty {
 
-        assertNotNull(createdIngredient);
-        assertEquals("Flour", createdIngredient.getName());
-        assertNotNull(createdIngredient.getId());
-        assertNotNull(createdIngredient.getId().id());
-    }
+            @Test
+            @Description("")
+            void retrievingAnIngredientReturnsAnEmptyOptional() {
+                assertTrue(repositoryUnderTest.readById(new IngredientId(1)).isEmpty());
+            }
+        }
 
-    /**
-     * Trying to create a new Ingredient from a null input results in NullPointerException
-     */
-    @Test
-    void creatingAnIngredientFromNullInputFailsWithNullPointerException() {
-        var repositoryUnderTest = new VolatileMapIngredientRepository();
-        assertThrows(NullPointerException.class, () -> repositoryUnderTest.create(null));
+        @Nested
+        @Description("Which contains an ingredient")
+        public class WhichContainsAnIngredient {
+
+            private Ingredient ingredientInDatabase;
+
+            @BeforeEach
+            void setup() {
+                ingredientInDatabase = repositoryUnderTest.create(new CreateIngredient("Flour"));
+            }
+
+            @Test
+            @Description("then the ingredient contained in the database can be retrieved")
+            void theIngredientCanBeRetrieved() {
+                var maybeRetrievedIngredient = repositoryUnderTest.readById(ingredientInDatabase.getId());
+                assertEquals(Optional.of(ingredientInDatabase), maybeRetrievedIngredient);
+            }
+
+            @Test
+            @Description("then the ingredient can be removed from the dabatase")
+            void theIngredientCanBeRemoved() {
+                assertThat(repositoryUnderTest.deleteById(ingredientInDatabase.getId())).isEqualTo(Optional.of(ingredientInDatabase));
+                assertThat(repositoryUnderTest.readById(ingredientInDatabase.getId())).isEqualTo(Optional.empty());
+            }
+
+            @AfterEach
+            void teardown() {
+                repositoryUnderTest.deleteById(ingredientInDatabase.getId());
+            }
+        }
+
+        @Test
+        void creatingAnIngredientReturnsAValidIngredientObject() {
+            var createIngredientRequest = new CreateIngredient("Flour");
+            var createdIngredient = repositoryUnderTest.create(createIngredientRequest);
+
+            assertNotNull(createdIngredient);
+            assertEquals("Flour", createdIngredient.getName());
+            assertNotNull(createdIngredient.getId());
+            assertNotNull(createdIngredient.getId().id());
+        }
+
+        @Test
+        @Description("Trying to create a new Ingredient from a null input results in NullPointerException")
+        void creatingAnIngredientFromNullInputFailsWithNullPointerException() {
+            var repositoryUnderTest = new VolatileMapIngredientRepository();
+            assertThrows(NullPointerException.class, () -> repositoryUnderTest.create(null));
+        }
     }
 }

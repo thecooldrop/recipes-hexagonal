@@ -25,6 +25,7 @@ class VolatileMapIngredientRepositoryTest {
             repositoryUnderTest = new VolatileMapIngredientRepository();
         }
 
+
         @Nested
         @Description("Which is empty")
         public class WhichIsEmpty {

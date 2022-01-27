@@ -37,6 +37,7 @@ class VolatileMapIngredientRepositoryTest {
             }
         }
 
+
         @Nested
         @Description("Which contains an ingredient")
         public class WhichContainsAnIngredient {

@@ -2,6 +2,7 @@ package udarnicka.recipes.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.ToString;
 
 import java.util.Optional;
@@ -11,22 +12,14 @@ import java.util.Optional;
 @Getter
 public class Ingredient {
 
-    private String name;
-    private IngredientId id;
+    private final String name;
+    private final IngredientId id;
 
-    private Ingredient(String name, IngredientId id) {
-        this.name = name;
+    public Ingredient(@NonNull String ingredient, @NonNull IngredientId id) {
+        if(ingredient.isBlank()) {
+            throw new IllegalArgumentException("Parameter Ingredient may not be blank");
+        }
+        this.name = ingredient;
         this.id = id;
-    }
-
-    public static Optional<Ingredient> tryFrom(String ingredient,
-                                               IngredientId id) {
-        if(ingredient == null || id == null) {
-            return Optional.empty();
-        }
-        if(!ingredient.isBlank()) {
-            return Optional.of(new Ingredient(ingredient, id));
-        }
-        return Optional.empty();
     }
 }

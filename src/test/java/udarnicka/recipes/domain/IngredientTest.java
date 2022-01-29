@@ -12,17 +12,17 @@ class IngredientTest {
 
     @Test
     void canNotCreateIngredientFromNullValues() {
-        assertEquals(Optional.empty(), Ingredient.tryFrom(null, null));
+        assertThrows(NullPointerException.class, () -> new Ingredient(null, null));
     }
 
     @Test
     void canNotCreateIngredientFromBlankIngredientName() {
-        assertEquals(Optional.empty(), Ingredient.tryFrom("", new IngredientId(1)));
-        assertEquals(Optional.empty(), Ingredient.tryFrom("  \n", new IngredientId(1)));
+        assertThrows(IllegalArgumentException.class, () -> new Ingredient("", new IngredientId(1)));
+        assertThrows(IllegalArgumentException.class, () -> new Ingredient(" \n", new IngredientId(1)));
     }
 
     @Test
     void canCreateIngredientFromNonBlankIngredientWithNonNullId() {
-        assertTrue(Ingredient.tryFrom("Flour", new IngredientId(1)).isPresent());
+        new Ingredient("Flour", new IngredientId(1));
     }
 }

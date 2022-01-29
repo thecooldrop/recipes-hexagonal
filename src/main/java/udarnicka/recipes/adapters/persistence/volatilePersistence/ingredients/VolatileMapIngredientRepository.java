@@ -1,5 +1,6 @@
 package udarnicka.recipes.adapters.persistence.volatilePersistence.ingredients;
 
+import lombok.NonNull;
 import org.springframework.stereotype.Repository;
 import udarnicka.recipes.application.CreateIngredient;
 import udarnicka.recipes.application.ports.out.IngredientRepository;
@@ -17,12 +18,9 @@ class VolatileMapIngredientRepository implements IngredientRepository {
     private Integer ingredientCounter = 0;
 
     @Override
-    public Ingredient create(CreateIngredient createIngredient) {
-        if(createIngredient == null) {
-            throw new NullPointerException("Creating a new ingredient from null input is not supported. Ingredient argument to VolatileMapIngredientRepository.create(CreateIngredient) method may is null");
-        }
+    public Ingredient create(@NonNull CreateIngredient createIngredient) {
         IngredientId id = new IngredientId(ingredientCounter++);
-        Ingredient ingredient = Ingredient.tryFrom(createIngredient.name(), id).get();
+        Ingredient ingredient = new Ingredient(createIngredient.name(), id);
         savedIngredients.put(id, ingredient);
         return ingredient;
     }

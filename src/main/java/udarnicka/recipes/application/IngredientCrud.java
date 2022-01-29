@@ -7,7 +7,7 @@ import udarnicka.recipes.domain.IngredientId;
 
 import java.util.Optional;
 
-class IngredientCrud implements IngredientCrudUsecase {
+public class IngredientCrud implements IngredientCrudUsecase {
 
     private final IngredientRepository ingredientRepository;
 

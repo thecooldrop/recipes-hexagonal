@@ -1,4 +1,4 @@
-package udarnicka.recipes.domain;
+package udarnicka.recipes.application;
 
 import lombok.NonNull;
 

@@ -2,8 +2,6 @@ package udarnicka.recipes.application;
 
 import udarnicka.recipes.application.ports.out.IngredientRepository;
 import udarnicka.recipes.application.ports.in.IngredientCrudUsecase;
-import udarnicka.recipes.domain.Ingredient;
-import udarnicka.recipes.domain.IngredientId;
 
 import java.util.Optional;
 

@@ -1,11 +1,9 @@
-package udarnicka.recipes.domain;
+package udarnicka.recipes.application;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
-
-import java.util.Optional;
 
 @ToString
 @EqualsAndHashCode

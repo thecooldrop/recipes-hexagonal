@@ -3,26 +3,26 @@ package udarnicka.recipes.adapters.persistence.volatilePersistence.ingredients;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.*;
 import udarnicka.recipes.application.CreateIngredient;
-import udarnicka.recipes.domain.Ingredient;
-import udarnicka.recipes.domain.IngredientId;
+import udarnicka.recipes.application.Ingredient;
+import udarnicka.recipes.application.IngredientId;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-class VolatileMapIngredientRepositoryTest {
+class InMemoryIngredientRepositoryTest {
 
 
     @Nested
     @Description("If there is a database")
     public class GivenADatabase {
 
-        private VolatileMapIngredientRepository repositoryUnderTest;
+        private InMemoryIngredientRepository repositoryUnderTest;
 
         @BeforeEach
         void setup() {
-            repositoryUnderTest = new VolatileMapIngredientRepository();
+            repositoryUnderTest = new InMemoryIngredientRepository();
         }
 
 
@@ -83,7 +83,7 @@ class VolatileMapIngredientRepositoryTest {
         @Test
         @Description("Trying to create a new Ingredient from a null input results in NullPointerException")
         void creatingAnIngredientFromNullInputFailsWithNullPointerException() {
-            var repositoryUnderTest = new VolatileMapIngredientRepository();
+            var repositoryUnderTest = new InMemoryIngredientRepository();
             assertThrows(NullPointerException.class, () -> repositoryUnderTest.create(null));
         }
     }

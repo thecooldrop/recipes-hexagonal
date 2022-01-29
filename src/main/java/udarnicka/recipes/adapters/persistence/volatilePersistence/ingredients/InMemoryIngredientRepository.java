@@ -4,15 +4,15 @@ import lombok.NonNull;
 import org.springframework.stereotype.Repository;
 import udarnicka.recipes.application.CreateIngredient;
 import udarnicka.recipes.application.ports.out.IngredientRepository;
-import udarnicka.recipes.domain.Ingredient;
-import udarnicka.recipes.domain.IngredientId;
+import udarnicka.recipes.application.Ingredient;
+import udarnicka.recipes.application.IngredientId;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 @Repository
-class VolatileMapIngredientRepository implements IngredientRepository {
+class InMemoryIngredientRepository implements IngredientRepository {
 
     private final Map<IngredientId, Ingredient> savedIngredients = new HashMap<>();
     private Integer ingredientCounter = 0;

@@ -2,10 +2,10 @@ package udarnicka.recipes.adapters.persistence.volatilePersistence.ingredients;
 
 import lombok.NonNull;
 import org.springframework.stereotype.Repository;
-import udarnicka.recipes.application.CreateIngredient;
-import udarnicka.recipes.application.ports.out.IngredientRepository;
-import udarnicka.recipes.application.Ingredient;
-import udarnicka.recipes.application.IngredientId;
+import udarnicka.recipes.application.ingredients.api.CreateIngredient;
+import udarnicka.recipes.application.ingredients.api.IngredientRepository;
+import udarnicka.recipes.application.ingredients.api.Ingredient;
+import udarnicka.recipes.application.ingredients.api.IngredientId;
 
 import java.util.HashMap;
 import java.util.Map;

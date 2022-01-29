@@ -1,8 +1,8 @@
 package udarnicka.recipes.domain;
 
 import org.junit.jupiter.api.Test;
-import udarnicka.recipes.application.Ingredient;
-import udarnicka.recipes.application.IngredientId;
+import udarnicka.recipes.application.ingredients.api.Ingredient;
+import udarnicka.recipes.application.ingredients.api.IngredientId;
 
 import static org.junit.jupiter.api.Assertions.*;
 

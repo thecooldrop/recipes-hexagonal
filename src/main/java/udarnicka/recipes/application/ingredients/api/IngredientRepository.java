@@ -1,8 +1,4 @@
-package udarnicka.recipes.application.ports.out;
-
-import udarnicka.recipes.application.Ingredient;
-import udarnicka.recipes.application.IngredientId;
-import udarnicka.recipes.application.CreateIngredient;
+package udarnicka.recipes.application.ingredients.api;
 
 import java.util.Optional;
 

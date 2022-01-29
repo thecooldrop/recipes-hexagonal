@@ -1,4 +1,4 @@
-package udarnicka.recipes.application;
+package udarnicka.recipes.application.ingredients.api;
 
 import lombok.NonNull;
 

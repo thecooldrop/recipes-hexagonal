@@ -2,9 +2,9 @@ package udarnicka.recipes.adapters.persistence.volatilePersistence.ingredients;
 
 import jdk.jfr.Description;
 import org.junit.jupiter.api.*;
-import udarnicka.recipes.application.CreateIngredient;
-import udarnicka.recipes.application.Ingredient;
-import udarnicka.recipes.application.IngredientId;
+import udarnicka.recipes.application.ingredients.api.CreateIngredient;
+import udarnicka.recipes.application.ingredients.api.Ingredient;
+import udarnicka.recipes.application.ingredients.api.IngredientId;
 
 import java.util.Optional;
 

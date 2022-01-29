@@ -1,7 +1,6 @@
-package udarnicka.recipes.application;
+package udarnicka.recipes.application.ingredients;
 
-import udarnicka.recipes.application.ports.out.IngredientRepository;
-import udarnicka.recipes.application.ports.in.IngredientCrudUsecase;
+import udarnicka.recipes.application.ingredients.api.*;
 
 import java.util.Optional;
 

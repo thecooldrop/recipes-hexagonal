@@ -1,10 +1,10 @@
-package udarnicka.recipes.adapters.persistence.volatilePersistence.ingredients;
+package udarnicka.ingredients.crud.domain;
 
 import jdk.jfr.Description;
 import org.junit.jupiter.api.*;
-import udarnicka.recipes.application.ingredients.api.CreateIngredient;
-import udarnicka.recipes.application.ingredients.api.Ingredient;
-import udarnicka.recipes.application.ingredients.api.IngredientId;
+import udarnicka.ingredients.crud.domain.ports.CreateIngredient;
+import udarnicka.ingredients.crud.domain.ports.Ingredient;
+import udarnicka.ingredients.crud.domain.ports.IngredientId;
 
 import java.util.Optional;
 

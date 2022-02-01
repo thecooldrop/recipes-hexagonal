@@ -1,4 +1,4 @@
-package udarnicka.recipes.application.ingredients.api;
+package udarnicka.ingredients.crud.domain.ports;
 
 import java.util.Objects;
 

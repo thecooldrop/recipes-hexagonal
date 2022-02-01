@@ -1,8 +1,8 @@
-package udarnicka.recipes.domain;
+package udarnicka.ingredients.crud.domain.ports;
 
 import org.junit.jupiter.api.Test;
-import udarnicka.recipes.application.ingredients.api.Ingredient;
-import udarnicka.recipes.application.ingredients.api.IngredientId;
+import udarnicka.ingredients.crud.domain.ports.Ingredient;
+import udarnicka.ingredients.crud.domain.ports.IngredientId;
 
 import static org.junit.jupiter.api.Assertions.*;
 

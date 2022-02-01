@@ -1,17 +1,15 @@
-package udarnicka.recipes.adapters.persistence.volatilePersistence.ingredients;
+package udarnicka.ingredients.crud.domain;
 
 import lombok.NonNull;
-import org.springframework.stereotype.Repository;
-import udarnicka.recipes.application.ingredients.api.CreateIngredient;
-import udarnicka.recipes.application.ingredients.api.IngredientRepository;
-import udarnicka.recipes.application.ingredients.api.Ingredient;
-import udarnicka.recipes.application.ingredients.api.IngredientId;
+import udarnicka.ingredients.crud.domain.ports.CreateIngredient;
+import udarnicka.ingredients.crud.domain.ports.Ingredient;
+import udarnicka.ingredients.crud.domain.ports.IngredientId;
+import udarnicka.ingredients.crud.domain.ports.IngredientRepository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-@Repository
 class InMemoryIngredientRepository implements IngredientRepository {
 
     private final Map<IngredientId, Ingredient> savedIngredients = new HashMap<>();

@@ -12,7 +12,7 @@ import javax.persistence.*;
 class IngredientJpaEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "name", unique = true, nullable = false)

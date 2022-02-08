@@ -2,7 +2,6 @@ package udarnicka.ingredients.crud.persistence.jpa;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import udarnicka.ingredients.crud.domain.ports.IngredientId;
 
 import java.util.Optional;
 

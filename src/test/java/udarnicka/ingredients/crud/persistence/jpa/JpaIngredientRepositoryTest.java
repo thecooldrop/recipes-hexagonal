@@ -18,6 +18,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import udarnicka.ingredients.crud.domain.ports.CreateIngredient;
 import udarnicka.ingredients.crud.domain.ports.Ingredient;
+import udarnicka.ingredients.crud.domain.ports.IngredientId;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -46,6 +47,7 @@ class JpaIngredientRepositoryTest {
         }
 
         @Nested
+        @Description("which contains no elements")
         public class WhichIsEmpty {
 
             @Autowired
@@ -59,6 +61,7 @@ class JpaIngredientRepositoryTest {
             }
 
             @Test
+            @Description("then new ingredients can be saved into the database")
             void thenNewIngredientCanBeSavedIntoTheDatabase() {
                 CreateIngredient createIngredientCommand = new CreateIngredient("Flour");
                 ingredientRepositoryTested.create(createIngredientCommand);
@@ -74,12 +77,24 @@ class JpaIngredientRepositoryTest {
             }
 
             @Test
+            @Description("then same ingredient can not be saved into database twice")
             void sameIngredientCanNotBeSavedIntoDatabaseTwice() {
                 CreateIngredient createIngredientCommand = new CreateIngredient("Flour");
                 ingredientRepositoryTested.create(createIngredientCommand);
                 assertThatThrownBy(() -> ingredientRepositoryTested.create(createIngredientCommand)).isInstanceOf(DataIntegrityViolationException.class);
             }
 
+            @Test
+            @Description("then deleting any ingredient returns an empty Optional")
+            void thenDeletingNonExistentIngredientReturnsEmptyOptional() {
+                assertThat(ingredientRepositoryTested.deleteById(new IngredientId(1))).isEqualTo(Optional.empty());
+            }
+
+            @Test
+            @Description("then reading any ingredient returns an empty optional")
+            void thenReadingANonexsistentIngredientReturnsEmptyOptional() {
+                assertThat(ingredientRepositoryTested.readById(new IngredientId(1))).isEqualTo(Optional.empty());
+            }
 
         }
 
@@ -129,6 +144,20 @@ class JpaIngredientRepositoryTest {
                 assertThat(removedIngredient).isEqualTo(randomIngredientFromDb);
                 assertThat(numOfIngredientsInDbBeforeDeletion).isGreaterThan(numOfIngredientsInDatabaseAfterDeletion);
                 assertThat(shouldBeEmptyIngredient).isEqualTo(Optional.empty());
+            }
+
+            @Test
+            void whenIngredientIsDeletedItIsReturned() {
+                Ingredient randomIngredient = ingredientsInDatabase.get(new Random().nextInt(ingredientsInDatabase.size()));
+                Optional<Ingredient> deletedIngredient = ingredientRepositoryTested.deleteById(randomIngredient.getId());
+                assertThat(deletedIngredient).isEqualTo(Optional.of(randomIngredient));
+            }
+
+            @Test
+            void thenExistingIngredientCanBeRetrieved() {
+                Ingredient randomIngredient = ingredientsInDatabase.get(new Random().nextInt(ingredientsInDatabase.size()));
+                Optional<Ingredient> ingredientInDb = ingredientRepositoryTested.readById(randomIngredient.getId());
+                assertThat(ingredientInDb).isEqualTo(Optional.of(randomIngredient));
             }
         }
     }

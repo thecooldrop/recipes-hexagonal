@@ -4,14 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-import udarnicka.ingredients.crud.domain.ports.CreateIngredient;
-import udarnicka.ingredients.crud.domain.ports.DuplicateIngredientException;
-import udarnicka.ingredients.crud.domain.ports.Ingredient;
-import udarnicka.ingredients.crud.domain.ports.IngredientCrudService;
+import org.springframework.web.bind.annotation.*;
+import udarnicka.ingredients.crud.domain.ports.*;
 
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 public class IngredientsController {
@@ -23,7 +20,7 @@ public class IngredientsController {
         this.ingredientsCrud = ingredientsCrud;
     }
 
-    @PostMapping(path = "/v1/ingredients")
+    @PostMapping(path = "/v1/ingredients", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Ingredient> post(CreateIngredient createIngredient) {
         Ingredient createdIngredient = ingredientsCrud.createIngredient(createIngredient);
         try {
@@ -36,6 +33,12 @@ public class IngredientsController {
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(duplicateError.getAlreadyInDatabase());
         }
+    }
+
+    @GetMapping(path = "/v1/ingredients/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Ingredient> get(@PathVariable("id") int id) {
+        return ResponseEntity.of(ingredientsCrud.readIngredient(new IngredientId(id)));
+    }
 
     }
 }

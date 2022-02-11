@@ -40,5 +40,10 @@ public class IngredientsController {
         return ResponseEntity.of(ingredientsCrud.readIngredient(new IngredientId(id)));
     }
 
+    @DeleteMapping(path = "/v1/ingredients/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Ingredient> delete(@PathVariable("id") int id) {
+        Optional<Ingredient> deletedIngredient = ingredientsCrud.deleteIngredient(new IngredientId(id));
+        return deletedIngredient.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.noContent().build());
     }
 }

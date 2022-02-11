@@ -1,9 +1,7 @@
 package udarnicka.ingredients.crud.persistence.jpa;
 
-import udarnicka.ingredients.crud.domain.ports.CreateIngredient;
-import udarnicka.ingredients.crud.domain.ports.Ingredient;
-import udarnicka.ingredients.crud.domain.ports.IngredientId;
-import udarnicka.ingredients.crud.domain.ports.IngredientRepository;
+import org.springframework.dao.DataIntegrityViolationException;
+import udarnicka.ingredients.crud.domain.ports.*;
 
 import java.util.Optional;
 
@@ -20,8 +18,15 @@ public class JpaIngredientRepository implements IngredientRepository {
     public Ingredient create(CreateIngredient ingredient) {
         IngredientJpaEntity ingredientDataEntity = new IngredientJpaEntity();
         ingredientDataEntity.setName(ingredient.name());
-        springDataIngredientRepository.save(ingredientDataEntity);
-        return new Ingredient(ingredientDataEntity.getName(), new IngredientId(ingredientDataEntity.getId()));
+        Optional<IngredientJpaEntity> ingredientEntityInDatabase = springDataIngredientRepository.findByName(ingredient.name());
+        if(ingredientEntityInDatabase.isPresent()) {
+            Ingredient ingredientInDb = ingredientEntityInDatabase.map(elem -> new Ingredient(elem.getName(), new IngredientId(elem.getId())))
+                    .orElseThrow(() -> new IllegalStateException("Element not found in database despite being recorded as duplicate. Possible transaction isolation error"));
+            throw new DuplicateIngredientException("The ingredient " + ingredientInDb + " is already contained in the database", ingredientInDb);
+        } else {
+            springDataIngredientRepository.save(ingredientDataEntity);
+            return new Ingredient(ingredientDataEntity.getName(), new IngredientId(ingredientDataEntity.getId()));
+        }
     }
 
     @Override

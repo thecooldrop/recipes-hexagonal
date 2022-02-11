@@ -2,21 +2,19 @@ package udarnicka.ingredients.crud.persistence.jpa;
 
 import jdk.jfr.Description;
 import org.assertj.core.api.Assertions;
-import org.checkerframework.checker.units.qual.C;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import udarnicka.ingredients.crud.domain.ports.CreateIngredient;
+import udarnicka.ingredients.crud.domain.ports.DuplicateIngredientException;
 import udarnicka.ingredients.crud.domain.ports.Ingredient;
 import udarnicka.ingredients.crud.domain.ports.IngredientId;
 
@@ -37,7 +35,7 @@ class JpaIngredientRepositoryTest {
     public class GivenAPostgresqlDatabase {
 
         @Container
-        private static final PostgreSQLContainer<?> container = new PostgreSQLContainer("postgres:14");
+        private static final PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:14");
 
         @DynamicPropertySource
         static void registerProperties(DynamicPropertyRegistry registry) {
@@ -52,6 +50,9 @@ class JpaIngredientRepositoryTest {
 
             @Autowired
             private SpringDataIngredientRepository springDataIngredientRepository;
+
+            @PersistenceContext
+            private EntityManager em;
 
             private JpaIngredientRepository ingredientRepositoryTested;
 
@@ -81,7 +82,7 @@ class JpaIngredientRepositoryTest {
             void sameIngredientCanNotBeSavedIntoDatabaseTwice() {
                 CreateIngredient createIngredientCommand = new CreateIngredient("Flour");
                 ingredientRepositoryTested.create(createIngredientCommand);
-                assertThatThrownBy(() -> ingredientRepositoryTested.create(createIngredientCommand)).isInstanceOf(DataIntegrityViolationException.class);
+                assertThatThrownBy(() -> ingredientRepositoryTested.create(createIngredientCommand)).isInstanceOf(DuplicateIngredientException.class);
             }
 
             @Test

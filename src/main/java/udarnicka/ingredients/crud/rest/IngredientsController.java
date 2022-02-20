@@ -21,15 +21,15 @@ public class IngredientsController {
     }
 
     @PostMapping(path = "/v1/ingredients", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<Ingredient> post(CreateIngredient createIngredient) {
-        Ingredient createdIngredient = ingredientsCrud.createIngredient(createIngredient);
+    ResponseEntity<Ingredient> post(@RequestBody CreateIngredient createIngredient) {
         try {
-            return ResponseEntity.created(URI.create("/v1/ingredients/" + createdIngredient.getId()))
+            Ingredient createdIngredient = ingredientsCrud.createIngredient(createIngredient);
+            return ResponseEntity.created(URI.create("/v1/ingredients/" + createdIngredient.getId().id()))
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(createdIngredient);
         } catch (DuplicateIngredientException duplicateError) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .location(URI.create("/v1/ingredients/" + duplicateError.getAlreadyInDatabase().getId()))
+                    .location(URI.create("/v1/ingredients/" + duplicateError.getAlreadyInDatabase().getId().id()))
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(duplicateError.getAlreadyInDatabase());
         }

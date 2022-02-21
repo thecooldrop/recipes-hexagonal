@@ -1,6 +1,5 @@
 package udarnicka.infrastructure;
 
-import org.postgresql.Driver;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,10 +9,10 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import javax.sql.DataSource;
 
 @Configuration
-@Profile("LOCAL_DATASOURCE")
+@Profile("LOCAL_DATABASE")
 public class LocalDatasourceConfiguration {
 
-    @Bean
+    @Bean("dataSource")
     DataSource localPostgresDatasource(PostgreSQLContainer<?> databaseContainer) {
         return DataSourceBuilder.create()
                 .driverClassName("org.postgresql.Driver")

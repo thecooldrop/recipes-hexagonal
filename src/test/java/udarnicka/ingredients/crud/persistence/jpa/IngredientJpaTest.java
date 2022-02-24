@@ -37,4 +37,12 @@ public class IngredientJpaTest {
         IngredientJpaEntity ingredient = new IngredientJpaEntity();
         assertThatThrownBy(() -> ingredient.setName("")).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @Description("If the canonical name of the ingredient is set, then the name of the ingredient can only be changed to remain compatible with the canonical name. In practice this means that ingredients can not be renamed")
+    void nameOfTheIngredientMustRemainCompatibleWithCanonicalName() {
+        IngredientJpaEntity ingredient = new IngredientJpaEntity();
+        ingredient.setName("Salt");
+        assertThatThrownBy(() -> ingredient.setName("Pepper")).isInstanceOf(IllegalArgumentException.class);
+    }
 }

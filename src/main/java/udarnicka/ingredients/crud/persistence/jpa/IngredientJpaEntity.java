@@ -32,6 +32,9 @@ class IngredientJpaEntity {
         if(name.isBlank()) {
             throw new IllegalArgumentException("The name of the ingredient may not be blank");
         }
+        if(canonicalName != null && !name.equalsIgnoreCase(canonicalName)) {
+            throw new IllegalArgumentException("The ingredients can not change names");
+        }
         this.name = name;
         this.canonicalName = name.toLowerCase();
     }

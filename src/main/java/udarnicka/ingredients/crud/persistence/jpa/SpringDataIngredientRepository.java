@@ -10,5 +10,5 @@ public interface SpringDataIngredientRepository extends CrudRepository<Ingredien
     @Query(nativeQuery = true, value = "DELETE FROM ingredients where id=?1 RETURNING *")
     Optional<IngredientJpaEntity> deleteByIdReturning(Integer id);
 
-    Optional<IngredientJpaEntity> findByName(String name);
+    Optional<IngredientJpaEntity> findByCanonicalName(String name);
 }

@@ -18,15 +18,14 @@ public class JpaIngredientRepository implements IngredientRepository {
     public Ingredient create(CreateIngredient ingredient) {
         IngredientJpaEntity ingredientDataEntity = new IngredientJpaEntity();
         ingredientDataEntity.setName(ingredient.name());
-        Optional<IngredientJpaEntity> ingredientEntityInDatabase = springDataIngredientRepository.findByName(ingredient.name());
-        if(ingredientEntityInDatabase.isPresent()) {
-            Ingredient ingredientInDb = ingredientEntityInDatabase.map(elem -> new Ingredient(elem.getName(), new IngredientId(elem.getId())))
-                    .orElseThrow(() -> new IllegalStateException("Element not found in database despite being recorded as duplicate. Possible transaction isolation error"));
-            throw new DuplicateIngredientException("The ingredient " + ingredientInDb + " is already contained in the database", ingredientInDb);
-        } else {
-            springDataIngredientRepository.save(ingredientDataEntity);
-            return new Ingredient(ingredientDataEntity.getName(), new IngredientId(ingredientDataEntity.getId()));
-        }
+        springDataIngredientRepository.findByCanonicalName(ingredientDataEntity.getCanonicalName())
+                .map(elem -> new Ingredient(elem.getName(), new IngredientId(elem.getId())))
+                .map(elem -> new DuplicateIngredientException("The ingredient " + elem + " is already contained in the database", elem))
+                .ifPresent(elem -> {
+                    throw elem;
+                });
+        springDataIngredientRepository.save(ingredientDataEntity);
+        return new Ingredient(ingredientDataEntity.getName(), new IngredientId(ingredientDataEntity.getId()));
     }
 
     @Override

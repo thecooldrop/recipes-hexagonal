@@ -71,6 +71,7 @@ class JpaIngredientRepositoryTest {
                 for(IngredientJpaEntity ingredient : springDataIngredientRepository.findAll()) {
                     Assertions.assertThat(ingredient.getId()).isNotNull();
                     Assertions.assertThat(ingredient.getName()).isEqualTo("Flour");
+                    Assertions.assertThat(ingredient.getCanonicalName()).isEqualTo("flour");
                     ingredientCount++;
                 }
 
@@ -86,6 +87,14 @@ class JpaIngredientRepositoryTest {
             }
 
             @Test
+            @Description("then the ingredient with same canonical name can not be saved into database twice")
+            void ingredientWithSameCanonicalNameCanNotBeSavedIntoDbTwice() {
+                CreateIngredient createIngredient = new CreateIngredient("Flour");
+                ingredientRepositoryTested.create(createIngredient);
+                assertThatThrownBy(() -> ingredientRepositoryTested.create(new CreateIngredient("FLour"))).isInstanceOf(DuplicateIngredientException.class);
+            }
+
+            @Test
             @Description("then deleting any ingredient returns an empty Optional")
             void thenDeletingNonExistentIngredientReturnsEmptyOptional() {
                 assertThat(ingredientRepositoryTested.deleteById(new IngredientId(1))).isEqualTo(Optional.empty());
@@ -96,7 +105,6 @@ class JpaIngredientRepositoryTest {
             void thenReadingANonexsistentIngredientReturnsEmptyOptional() {
                 assertThat(ingredientRepositoryTested.readById(new IngredientId(1))).isEqualTo(Optional.empty());
             }
-
         }
 
         @Nested

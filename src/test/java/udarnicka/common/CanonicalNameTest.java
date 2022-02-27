@@ -1,6 +1,7 @@
 package udarnicka.common;
 
 import jdk.jfr.Description;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -27,5 +28,21 @@ public class CanonicalNameTest {
     void originalRepresentationCanBeRetrievedFromTheCanonicalRepresentation() {
         CanonicalName canonical = new CanonicalName("CanonIcal");
         assertThat(canonical.getOriginal()).isEqualTo("CanonIcal");
+    }
+
+    @Test
+    @Description("Canonical names can not be constructed from empty or blank strings")
+    void canNotBeEmptyOrBlank() {
+        assertThatThrownBy(() -> new CanonicalName("")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new CanonicalName("\n\t")).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @Description("Equal objects return the same hashcode")
+    void equalObjectsReturnSameHashValues() {
+        CanonicalName lowercased = new CanonicalName("lowercased");
+        CanonicalName uppercased = new CanonicalName("LOWERCASED");
+        assertThat(lowercased).isEqualTo(uppercased);
+        assertThat(lowercased.hashCode()).isEqualTo(uppercased.hashCode());
     }
 }

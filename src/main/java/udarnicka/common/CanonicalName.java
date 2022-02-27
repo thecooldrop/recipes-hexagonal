@@ -19,8 +19,11 @@ import java.util.Locale;
  *      assert second.toString().equals("One Two");
  *      assert !first.toString().equals(second.toString());
  *
- *      // Throws illegal argument exception
+ *      // Throws null pointer exception
  *      CanonicalName third = new CanonicalName(null);
+ *
+ *      // Throws illegal argument exception
+ *      CanonicalName fourth = new CanonicalName("");
  *
  * }
  * </pre>
@@ -31,7 +34,16 @@ public final class CanonicalName {
     private final String original;
     private final String canonical;
 
+    /**
+     * Constructs an instance of the CanonicalName object
+     * @param original - the string from which to construct this instance
+     * @throws NullPointerException if the input string is null
+     * @throws IllegalArgumentException if the input string is blank
+     */
     public CanonicalName(@NonNull String original) {
+        if(original.isBlank()) {
+            throw new IllegalArgumentException("The canonical name can not be empty or blank");
+        }
         this.original = original;
         this.canonical = original.toLowerCase();
     }
@@ -44,5 +56,10 @@ public final class CanonicalName {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return this.canonical.hashCode();
     }
 }

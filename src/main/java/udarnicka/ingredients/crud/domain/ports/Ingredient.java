@@ -10,14 +10,11 @@ import lombok.ToString;
 @Getter
 public class Ingredient {
 
-    private final String name;
+    private final IngredientName name;
     private final IngredientId id;
 
-    public Ingredient(@NonNull String ingredient, @NonNull IngredientId id) {
-        if(ingredient.isBlank()) {
-            throw new IllegalArgumentException("Parameter Ingredient may not be blank");
-        }
-        this.name = ingredient;
+    public Ingredient(@NonNull IngredientName name, @NonNull IngredientId id) {
+        this.name = name;
         this.id = id;
     }
 }

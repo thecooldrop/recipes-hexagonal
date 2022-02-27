@@ -4,3 +4,6 @@
   recipes identified by their canonical names the same way as ingredients. On the one hand it makes sense to me because
   it makes searching much easier, while on the other hand it does not make sense since there may be multipe recipe 
   variations for preparing the same dish.
+- I have an idea to refactor the JPA repositories for Ingredient and Recipe into a single interface which would 
+  enable the CRUD operations on all entities which implement specific interfaces. This may be too generic for Java lang
+  though

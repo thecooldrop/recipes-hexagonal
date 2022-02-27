@@ -1,9 +1,10 @@
 - I should write tests for the REST layer of ingredients crud
-- I have started working on recipes CRUD. I have implemented few basic input types, now I am going to move on
-  to implement the actual logic and repositories. One though is in my mind though and namely if it makes sense to have
-  recipes identified by their canonical names the same way as ingredients. On the one hand it makes sense to me because
-  it makes searching much easier, while on the other hand it does not make sense since there may be multipe recipe 
-  variations for preparing the same dish.
 - I have an idea to refactor the JPA repositories for Ingredient and Recipe into a single interface which would 
   enable the CRUD operations on all entities which implement specific interfaces. This may be too generic for Java lang
   though
+- In the internal construction of domain classes such as ingredient ID, there is a lot of type composition going on
+  which uses types to express both intent and constraints. This means that these deeply composed classes will pop up
+  in our RESTful output to the clients, and will break API whenever they change. This means we need REST layer.
+- I have started implementing the abstract base test class to enable running tests across all implementations of the
+  recipe repository. The reason for doing this is that I am likely to have multiple different repositories, one for
+  in memory, one for postgres and eventually one for dynamo db.

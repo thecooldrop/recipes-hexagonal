@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import udarnicka.common.SerialInteger;
 import udarnicka.ingredients.crud.domain.ports.*;
 
 import java.net.URI;
@@ -37,12 +38,12 @@ public class IngredientsController {
 
     @GetMapping(path = "/v1/ingredients/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Ingredient> get(@PathVariable("id") int id) {
-        return ResponseEntity.of(ingredientsCrud.readIngredient(new IngredientId(id)));
+        return ResponseEntity.of(ingredientsCrud.readIngredient(new IngredientId(new SerialInteger(id))));
     }
 
     @DeleteMapping(path = "/v1/ingredients/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Ingredient> delete(@PathVariable("id") int id) {
-        Optional<Ingredient> deletedIngredient = ingredientsCrud.deleteIngredient(new IngredientId(id));
+        Optional<Ingredient> deletedIngredient = ingredientsCrud.deleteIngredient(new IngredientId(new SerialInteger(id)));
         return deletedIngredient.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.noContent().build());
     }

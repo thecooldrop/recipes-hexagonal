@@ -13,6 +13,7 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import udarnicka.common.SerialInteger;
 import udarnicka.ingredients.crud.domain.ports.CreateIngredient;
 import udarnicka.ingredients.crud.domain.ports.DuplicateIngredientException;
 import udarnicka.ingredients.crud.domain.ports.Ingredient;
@@ -97,13 +98,13 @@ class JpaIngredientRepositoryTest {
             @Test
             @Description("then deleting any ingredient returns an empty Optional")
             void thenDeletingNonExistentIngredientReturnsEmptyOptional() {
-                assertThat(ingredientRepositoryTested.deleteById(new IngredientId(1))).isEqualTo(Optional.empty());
+                assertThat(ingredientRepositoryTested.deleteById(new IngredientId(new SerialInteger(1)))).isEqualTo(Optional.empty());
             }
 
             @Test
             @Description("then reading any ingredient returns an empty optional")
             void thenReadingANonexsistentIngredientReturnsEmptyOptional() {
-                assertThat(ingredientRepositoryTested.readById(new IngredientId(1))).isEqualTo(Optional.empty());
+                assertThat(ingredientRepositoryTested.readById(new IngredientId(new SerialInteger(1)))).isEqualTo(Optional.empty());
             }
         }
 

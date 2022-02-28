@@ -1,4 +1,4 @@
-package udarnicka.recipes.crud.domain.ports;
+package udarnicka.recipes.crud.persistence;
 
 import jdk.jfr.Description;
 import org.junit.jupiter.api.Nested;
@@ -8,6 +8,7 @@ import udarnicka.common.CanonicalName;
 import udarnicka.common.HasCanonicalName;
 import udarnicka.common.HasId;
 import udarnicka.common.SerialInteger;
+import udarnicka.recipes.crud.domain.ports.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -69,6 +70,7 @@ public abstract class RecipeRepositoryAbstractTest {
         }
 
         @Nested
+        @Description("which contains some recipes")
         public abstract class WhichContainsSomeRecipes<Entity extends HasId<?> & HasCanonicalName, DataSource extends CrudRepository<Entity, ?>> {
 
             @PersistenceContext

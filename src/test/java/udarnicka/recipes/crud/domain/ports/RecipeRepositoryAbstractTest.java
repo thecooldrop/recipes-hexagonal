@@ -8,7 +8,11 @@ import udarnicka.common.CanonicalName;
 import udarnicka.common.HasCanonicalName;
 import udarnicka.common.HasId;
 import udarnicka.common.SerialInteger;
-import udarnicka.ingredients.crud.domain.ports.DuplicateIngredientException;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -65,8 +69,65 @@ public abstract class RecipeRepositoryAbstractTest {
         }
 
         @Nested
-        public abstract class WhichContainsSomeRecipes {
+        public abstract class WhichContainsSomeRecipes<Entity extends HasId<?> & HasCanonicalName, DataSource extends CrudRepository<Entity, ?>> {
 
+            @PersistenceContext
+            private EntityManager em;
+
+            private List<Recipe> recipesInDb;
+
+            public abstract DataSource getDataSource();
+            public abstract RecipeRepository getTestedRepository();
+
+            private void initializeData() {
+                recipesInDb = new ArrayList<>();
+                CreateRecipe pizzaMargharita = new CreateRecipe("Pizza Margarita");
+                CreateRecipe friedChickenBreast = new CreateRecipe("Fried Chicken Breast");
+                CreateRecipe frenchFries = new CreateRecipe("French Fries");
+                CreateRecipe lasagnaBolognese = new CreateRecipe("Lasagna Bolognese");
+                CreateRecipe spaghettiCarbonara = new CreateRecipe("Spaghetti Carbonara");
+
+                for(CreateRecipe command : Arrays.asList(pizzaMargharita, friedChickenBreast, frenchFries, lasagnaBolognese, spaghettiCarbonara)) {
+                    Recipe recipe = getTestedRepository().create(command);
+                    recipesInDb.add(recipe);
+                }
+
+            }
+
+            @Test
+            @Description("then deleting a recipe removes it from the database")
+            void deletingTheRecipeRemovesItFromTheDatabase() {
+                initializeData();
+                Recipe randomRecipe = recipesInDb.get(new Random().nextInt(recipesInDb.size()));
+                long numOfRecipesInDbBeforeDeletion = getDataSource().count();
+                Optional<Recipe> randomRecipeFromDb = getTestedRepository().readById(randomRecipe.getId());
+                Optional<Recipe> removedRecipe = getTestedRepository().deleteById(randomRecipe.getId());
+                long numOfRecipesInDatabaseAfterDeletion = getDataSource().count();
+                em.flush();
+                em.clear();
+
+                Optional<Recipe> shouldBeEmptyRecipe = getTestedRepository().readById(randomRecipe.getId());
+                assertThat(randomRecipeFromDb).isEqualTo(Optional.of(randomRecipe));
+                assertThat(removedRecipe).isEqualTo(randomRecipeFromDb);
+                assertThat(numOfRecipesInDatabaseAfterDeletion).isGreaterThan(numOfRecipesInDbBeforeDeletion);
+                assertThat(shouldBeEmptyRecipe).isEqualTo(Optional.empty());
+            }
+
+            @Test
+            @Description("then deleting a recipe returns the recipe")
+            void deletingTheRecipeReturnsDeletedRecipe() {
+                Recipe randomRecipe = recipesInDb.get(new Random().nextInt(recipesInDb.size()));
+                Optional<Recipe> recipeInDb = getTestedRepository().deleteById(randomRecipe.getId());
+                assertThat(recipeInDb).isEqualTo(Optional.of(randomRecipe));
+            }
+
+            @Test
+            @Description("then the existing recipe can be read")
+            void existingRecipeCanBeRead() {
+                Recipe randomRecipe = recipesInDb.get(new Random().nextInt(recipesInDb.size()));
+                Optional<Recipe> recipeInDb = getTestedRepository().readById(randomRecipe.getId());
+                assertThat(recipeInDb).isEqualTo(Optional.of(randomRecipe));
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 package udarnicka.recipes.crud.persistence;
 
 import jdk.jfr.Description;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.repository.CrudRepository;
@@ -21,23 +22,28 @@ public abstract class RecipeRepositoryAbstractTest {
 
     @Nested
     @Description("If there is a database")
-    public abstract class GivenADatabase {
+    public class GivenADatabase {
 
         @Nested
         @Description("which contains no recipes")
-        public abstract class WhichIsEmpty<Entity extends HasId<?> & HasCanonicalName, DataSource extends CrudRepository<Entity, ?>> {
+        public class WhichIsEmpty<Entity extends HasId<?> & HasCanonicalName, DataSource extends CrudRepository<Entity, ?>> {
 
-            public abstract RecipeRepository getTestedRepository();
-            public abstract DataSource getDataSource();
+            protected RecipeRepository recipeRepository;
+            protected DataSource dataSource;
+
+            @BeforeEach
+            protected void setup() {
+
+            }
 
             @Test
             @Description("then new Recipes can be saved into the database")
-            void thenNewRecipesCanBeSavedIntoTheDatabase() {
+            protected void thenNewRecipesCanBeSavedIntoTheDatabase() {
                 CreateRecipe createRecipeCommand = new CreateRecipe("Pizza Margarita");
-                getTestedRepository().create(createRecipeCommand);
+                recipeRepository.create(createRecipeCommand);
 
                 int recipeCount = 0;
-                for(Entity recipeInDb : getDataSource().findAll()) {
+                for(Entity recipeInDb : dataSource.findAll()) {
                     assertThat(recipeInDb.getId()).isNotNull();
                     assertThat(recipeInDb.getCanonicalName()).isEqualTo(new CanonicalName("Pizza Margarita"));
                     assertThat(recipeInDb.getCanonicalName().getOriginal()).isEqualTo("Pizza Margarita");
@@ -49,39 +55,39 @@ public abstract class RecipeRepositoryAbstractTest {
 
             @Test
             @Description("then recipe with same canonical name can not be saved into database twice")
-            void recipeWithSameNameCanNotBeCreatedTwice() {
+            protected void recipeWithSameNameCanNotBeCreatedTwice() {
                 CreateRecipe createRecipe = new CreateRecipe("Pizza Margarita");
-                getTestedRepository().create(createRecipe);
-                assertThatThrownBy(() -> getTestedRepository().create(new CreateRecipe("pizza margarita")))
+                recipeRepository.create(createRecipe);
+                assertThatThrownBy(() -> recipeRepository.create(new CreateRecipe("pizza margarita")))
                         .isInstanceOf(DuplicateRecipeException.class);
             }
 
             @Test
             @Description("then deleting any recipe returns an empty Optional")
-            void deletingAnyRecipeReturnsEmtpyOptional() {
-                assertThat(getTestedRepository().deleteById(new RecipeId(new SerialInteger(1)))).isEmpty();
+            protected void deletingAnyRecipeReturnsEmtpyOptional() {
+                assertThat(recipeRepository.deleteById(new RecipeId(new SerialInteger(1)))).isEmpty();
             }
 
             @Test
             @Description("then reading any ingredient returns an empty Optional")
-            void readingANonexistentRecipeReturnsAnEmptyOptional() {
-                assertThat(getTestedRepository().readById(new RecipeId(new SerialInteger(1)))).isEmpty();
+            protected void readingANonexistentRecipeReturnsAnEmptyOptional() {
+                assertThat(recipeRepository.readById(new RecipeId(new SerialInteger(1)))).isEmpty();
             }
         }
 
         @Nested
         @Description("which contains some recipes")
-        public abstract class WhichContainsSomeRecipes<Entity extends HasId<?> & HasCanonicalName, DataSource extends CrudRepository<Entity, ?>> {
+        public class WhichContainsSomeRecipes<Entity extends HasId<?> & HasCanonicalName, DataSource extends CrudRepository<Entity, ?>> {
 
             @PersistenceContext
             private EntityManager em;
 
             private List<Recipe> recipesInDb;
 
-            public abstract DataSource getDataSource();
-            public abstract RecipeRepository getTestedRepository();
+            protected DataSource dataSource;
+            protected RecipeRepository recipeRepository;
 
-            private void initializeData() {
+            protected void initializeData() {
                 recipesInDb = new ArrayList<>();
                 CreateRecipe pizzaMargharita = new CreateRecipe("Pizza Margarita");
                 CreateRecipe friedChickenBreast = new CreateRecipe("Fried Chicken Breast");
@@ -90,7 +96,7 @@ public abstract class RecipeRepositoryAbstractTest {
                 CreateRecipe spaghettiCarbonara = new CreateRecipe("Spaghetti Carbonara");
 
                 for(CreateRecipe command : Arrays.asList(pizzaMargharita, friedChickenBreast, frenchFries, lasagnaBolognese, spaghettiCarbonara)) {
-                    Recipe recipe = getTestedRepository().create(command);
+                    Recipe recipe = recipeRepository.create(command);
                     recipesInDb.add(recipe);
                 }
 
@@ -98,17 +104,17 @@ public abstract class RecipeRepositoryAbstractTest {
 
             @Test
             @Description("then deleting a recipe removes it from the database")
-            void deletingTheRecipeRemovesItFromTheDatabase() {
+            protected void deletingTheRecipeRemovesItFromTheDatabase() {
                 initializeData();
                 Recipe randomRecipe = recipesInDb.get(new Random().nextInt(recipesInDb.size()));
-                long numOfRecipesInDbBeforeDeletion = getDataSource().count();
-                Optional<Recipe> randomRecipeFromDb = getTestedRepository().readById(randomRecipe.getId());
-                Optional<Recipe> removedRecipe = getTestedRepository().deleteById(randomRecipe.getId());
-                long numOfRecipesInDatabaseAfterDeletion = getDataSource().count();
+                long numOfRecipesInDbBeforeDeletion = dataSource.count();
+                Optional<Recipe> randomRecipeFromDb = recipeRepository.readById(randomRecipe.getId());
+                Optional<Recipe> removedRecipe = recipeRepository.deleteById(randomRecipe.getId());
+                long numOfRecipesInDatabaseAfterDeletion = dataSource.count();
                 em.flush();
                 em.clear();
 
-                Optional<Recipe> shouldBeEmptyRecipe = getTestedRepository().readById(randomRecipe.getId());
+                Optional<Recipe> shouldBeEmptyRecipe = recipeRepository.readById(randomRecipe.getId());
                 assertThat(randomRecipeFromDb).isEqualTo(Optional.of(randomRecipe));
                 assertThat(removedRecipe).isEqualTo(randomRecipeFromDb);
                 assertThat(numOfRecipesInDatabaseAfterDeletion).isGreaterThan(numOfRecipesInDbBeforeDeletion);
@@ -117,17 +123,19 @@ public abstract class RecipeRepositoryAbstractTest {
 
             @Test
             @Description("then deleting a recipe returns the recipe")
-            void deletingTheRecipeReturnsDeletedRecipe() {
+            protected void deletingTheRecipeReturnsDeletedRecipe() {
+                initializeData();
                 Recipe randomRecipe = recipesInDb.get(new Random().nextInt(recipesInDb.size()));
-                Optional<Recipe> recipeInDb = getTestedRepository().deleteById(randomRecipe.getId());
+                Optional<Recipe> recipeInDb = recipeRepository.deleteById(randomRecipe.getId());
                 assertThat(recipeInDb).isEqualTo(Optional.of(randomRecipe));
             }
 
             @Test
             @Description("then the existing recipe can be read")
-            void existingRecipeCanBeRead() {
+            protected void existingRecipeCanBeRead() {
+                initializeData();
                 Recipe randomRecipe = recipesInDb.get(new Random().nextInt(recipesInDb.size()));
-                Optional<Recipe> recipeInDb = getTestedRepository().readById(randomRecipe.getId());
+                Optional<Recipe> recipeInDb = recipeRepository.readById(randomRecipe.getId());
                 assertThat(recipeInDb).isEqualTo(Optional.of(randomRecipe));
             }
         }

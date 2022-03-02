@@ -1,4 +1,4 @@
-package udarnicka.recipes.persistence.jpa;
+package udarnicka.recipes.crud.persistence.jpa;
 
 import udarnicka.common.CanonicalName;
 import udarnicka.common.HasCanonicalName;
@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-public class RecipeJpaEntity implements HasId<Integer>, HasCanonicalName {
+class RecipeJpaEntity implements HasId<Integer>, HasCanonicalName {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

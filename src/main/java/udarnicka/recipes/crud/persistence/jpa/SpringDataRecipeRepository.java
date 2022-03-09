@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface SpringDataRecipeRepository extends CrudRepository<RecipeJpaEntity, Integer> {
 
-    @Query(nativeQuery = true, value = "DELETE FROM ingredients where id=?1 RETURNING *")
+    @Query(nativeQuery = true, value = "DELETE FROM recipes where id=?1 RETURNING *")
     Optional<RecipeJpaEntity> deleteByIdReturning(Integer id);
 
     Optional<RecipeJpaEntity> findByCanonicalName(String name);

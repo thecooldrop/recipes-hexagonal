@@ -1,5 +1,6 @@
 package udarnicka.recipes.crud.persistence.jpa;
 
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import udarnicka.common.CanonicalName;
@@ -20,6 +21,7 @@ class RecipeJpaEntity implements HasId<Integer>, HasCanonicalName {
 
     @Column(name = "name", nullable = false)
     @NotBlank
+    @Getter
     private String name;
 
     @Column(name = "canonical_name", nullable = false)

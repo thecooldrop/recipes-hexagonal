@@ -12,9 +12,12 @@ import udarnicka.recipes.crud.domain.ports.DuplicateRecipeException;
 import udarnicka.recipes.crud.domain.ports.RecipeId;
 import udarnicka.recipes.crud.domain.ports.RecipeRepository;
 
+import javax.transaction.Transactional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@Transactional
 public abstract class RecipeRepositoryAbstractBaseTestGivenAnEmptyDatabase<Entity extends HasId<?> & HasCanonicalName, DataSource extends CrudRepository<Entity, ?>> {
 
     protected RecipeRepository recipeRepository;

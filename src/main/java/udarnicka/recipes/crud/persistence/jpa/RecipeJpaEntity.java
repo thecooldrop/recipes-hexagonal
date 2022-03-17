@@ -32,6 +32,9 @@ class RecipeJpaEntity implements HasId<Integer>, HasCanonicalName {
 
     @Override
     public CanonicalName getCanonicalName() {
+        if(transientCanonicalName == null) {
+            transientCanonicalName = new CanonicalName(name);
+        }
         return transientCanonicalName;
     }
 

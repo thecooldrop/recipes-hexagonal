@@ -11,10 +11,12 @@ import udarnicka.recipes.crud.domain.ports.RecipeRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional
 public class RecipeRepositoryAbstractBaseTestGivenADatabaseWithRecipes<Entity extends HasId<?> & HasCanonicalName, DataSource extends CrudRepository<Entity, ?>> {
 
     @PersistenceContext

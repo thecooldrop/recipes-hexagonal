@@ -14,7 +14,7 @@ import udarnicka.recipes.crud.persistence.RecipeRepositoryAbstractBaseTestGivenA
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Testcontainers
-public class JpaRecipeRepositoryTestGivenAnEmptyDatabase extends RecipeRepositoryAbstractBaseTestGivenAnEmptyDatabase<RecipeJpaEntity, SpringDataRecipeRepository> {
+public class JpaRecipeRepositoryTestGivenAnEmptyDatabaseTest extends RecipeRepositoryAbstractBaseTestGivenAnEmptyDatabase<RecipeJpaEntity, SpringDataRecipeRepository> {
 
     @Container
     private static final PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:14");

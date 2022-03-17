@@ -1,6 +1,7 @@
 package udarnicka.recipes.crud.persistence;
 
 import jdk.jfr.Description;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.repository.CrudRepository;
 import udarnicka.common.CanonicalName;

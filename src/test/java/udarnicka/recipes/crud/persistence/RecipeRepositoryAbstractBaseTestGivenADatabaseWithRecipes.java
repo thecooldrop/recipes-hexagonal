@@ -17,7 +17,7 @@ import java.util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional
-public class RecipeRepositoryAbstractBaseTestGivenADatabaseWithRecipes<Entity extends HasId<?> & HasCanonicalName, DataSource extends CrudRepository<Entity, ?>> {
+public abstract class RecipeRepositoryAbstractBaseTestGivenADatabaseWithRecipes<Entity extends HasId<?> & HasCanonicalName, DataSource extends CrudRepository<Entity, ?>> {
 
     @PersistenceContext
     private EntityManager em;
@@ -57,7 +57,7 @@ public class RecipeRepositoryAbstractBaseTestGivenADatabaseWithRecipes<Entity ex
         Optional<Recipe> shouldBeEmptyRecipe = recipeRepository.readById(randomRecipe.getId());
         assertThat(randomRecipeFromDb).isEqualTo(Optional.of(randomRecipe));
         assertThat(removedRecipe).isEqualTo(randomRecipeFromDb);
-        assertThat(numOfRecipesInDatabaseAfterDeletion).isGreaterThan(numOfRecipesInDbBeforeDeletion);
+        assertThat(numOfRecipesInDbBeforeDeletion).isGreaterThan(numOfRecipesInDatabaseAfterDeletion);
         assertThat(shouldBeEmptyRecipe).isEqualTo(Optional.empty());
     }
 

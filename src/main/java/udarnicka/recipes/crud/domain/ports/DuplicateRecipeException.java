@@ -5,9 +5,9 @@ import lombok.Getter;
 public class DuplicateRecipeException extends RuntimeException {
 
     @Getter
-    private final Recipe alreadyInDatabase;
+    private final RecipeId alreadyInDatabase;
 
-    public DuplicateRecipeException(String message, Recipe alreadyInDatabase) {
+    public DuplicateRecipeException(String message, RecipeId alreadyInDatabase) {
         super(message);
         this.alreadyInDatabase = alreadyInDatabase;
     }

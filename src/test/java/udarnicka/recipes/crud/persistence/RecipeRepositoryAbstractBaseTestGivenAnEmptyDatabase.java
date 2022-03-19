@@ -51,12 +51,6 @@ public abstract class RecipeRepositoryAbstractBaseTestGivenAnEmptyDatabase<Entit
     }
 
     @Test
-    @Description("then deleting any recipe returns an empty Optional")
-    protected void deletingAnyRecipeReturnsEmptyOptional() {
-        assertThat(recipeRepository.deleteById(new RecipeId(new SerialInteger(1)))).isEmpty();
-    }
-
-    @Test
     @Description("then reading any ingredient returns an empty Optional")
     protected void readingANonexistentRecipeReturnsAnEmptyOptional() {
         assertThat(recipeRepository.readById(new RecipeId(new SerialInteger(1)))).isEmpty();

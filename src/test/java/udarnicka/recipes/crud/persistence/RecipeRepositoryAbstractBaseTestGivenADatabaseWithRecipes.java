@@ -24,10 +24,17 @@ public abstract class RecipeRepositoryAbstractBaseTestGivenADatabaseWithRecipes<
 
     private List<Recipe> recipesInDb;
 
+
     protected DataSource dataSource;
     protected RecipeRepository recipeRepository;
 
     protected void initializeData() {
+        prepareRecipesInDb();
+        prepareARecipeWhichHasStepsAttached();
+    }
+
+
+    private void prepareRecipesInDb() {
         recipesInDb = new ArrayList<>();
         CreateRecipe pizzaMargharita = new CreateRecipe("Pizza Margarita");
         CreateRecipe friedChickenBreast = new CreateRecipe("Fried Chicken Breast");
@@ -39,6 +46,9 @@ public abstract class RecipeRepositoryAbstractBaseTestGivenADatabaseWithRecipes<
             Recipe recipe = recipeRepository.create(command);
             recipesInDb.add(recipe);
         }
+    }
+
+    private void prepareARecipeWhichHasStepsAttached() {
 
     }
 
@@ -48,27 +58,16 @@ public abstract class RecipeRepositoryAbstractBaseTestGivenADatabaseWithRecipes<
         initializeData();
         Recipe randomRecipe = recipesInDb.get(new Random().nextInt(recipesInDb.size()));
         long numOfRecipesInDbBeforeDeletion = dataSource.count();
-        Optional<Recipe> randomRecipeFromDb = recipeRepository.readById(randomRecipe.getId());
-        Optional<Recipe> removedRecipe = recipeRepository.deleteById(randomRecipe.getId());
+        recipeRepository.deleteById(randomRecipe.getId());
         long numOfRecipesInDatabaseAfterDeletion = dataSource.count();
         em.flush();
         em.clear();
 
         Optional<Recipe> shouldBeEmptyRecipe = recipeRepository.readById(randomRecipe.getId());
-        assertThat(randomRecipeFromDb).isEqualTo(Optional.of(randomRecipe));
-        assertThat(removedRecipe).isEqualTo(randomRecipeFromDb);
         assertThat(numOfRecipesInDbBeforeDeletion).isGreaterThan(numOfRecipesInDatabaseAfterDeletion);
         assertThat(shouldBeEmptyRecipe).isEqualTo(Optional.empty());
     }
 
-    @Test
-    @Description("then deleting a recipe returns the recipe")
-    protected void deletingTheRecipeReturnsDeletedRecipe() {
-        initializeData();
-        Recipe randomRecipe = recipesInDb.get(new Random().nextInt(recipesInDb.size()));
-        Optional<Recipe> recipeInDb = recipeRepository.deleteById(randomRecipe.getId());
-        assertThat(recipeInDb).isEqualTo(Optional.of(randomRecipe));
-    }
 
     @Test
     @Description("then the existing recipe can be read")

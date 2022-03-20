@@ -28,14 +28,13 @@ public class JpaRecipeRepository implements RecipeRepository {
     }
 
     @Override
-    public Optional<Recipe> deleteById(RecipeId id) {
-        return springJpaRecipeRepository.deleteByIdReturning(id.id().toInteger())
-                .map(elem -> new Recipe(elem.getName(), id));
+    public void deleteById(RecipeId id) {
+        springJpaRecipeRepository.deleteById(id.toInteger());
     }
 
     @Override
     public Optional<Recipe> readById(RecipeId id) {
-        return springJpaRecipeRepository.findById(id.id().toInteger())
+        return springJpaRecipeRepository.findById(id.toInteger())
                 .map(elem -> new Recipe(elem.getName(), id));
     }
 }

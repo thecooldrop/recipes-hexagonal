@@ -3,8 +3,6 @@ package udarnicka.common;
 import lombok.Getter;
 import lombok.NonNull;
 
-import java.util.Locale;
-
 /**
  * This class is a wrapper around strings which represents the canonical representation of the string. This
  * class enables us to have a canonical representation of names of objects and to compare them consistently.

@@ -11,6 +11,6 @@ public class RecipeIdTest {
     @Test
     @Description("The integer representing the recipe identifier may not be null")
     void recipeIdentifierMayNotBeNull() {
-        assertThatThrownBy(() -> new RecipeId((SerialInteger) null)).isInstanceOf(NullPointerException.class);
+        assertThatThrownBy(() -> new RecipeId(null)).isInstanceOf(NullPointerException.class);
     }
 }

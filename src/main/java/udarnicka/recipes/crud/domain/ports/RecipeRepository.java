@@ -5,6 +5,6 @@ import java.util.Optional;
 public interface RecipeRepository {
 
     Recipe create(CreateRecipe recipe);
-    Optional<Recipe> deleteById(RecipeId id);
+    void deleteById(RecipeId id);
     Optional<Recipe> readById(RecipeId id);
 }

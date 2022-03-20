@@ -1,6 +1,5 @@
 package udarnicka.ingredients.crud.persistence.jpa;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import udarnicka.common.CanonicalName;
 import udarnicka.common.SerialInteger;
 import udarnicka.ingredients.crud.domain.ports.*;

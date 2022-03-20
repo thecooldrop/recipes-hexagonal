@@ -1,12 +1,8 @@
 package udarnicka.ingredients.crud.domain.ports;
 
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 import udarnicka.common.CanonicalName;
 import udarnicka.common.SerialInteger;
-import udarnicka.ingredients.crud.domain.ports.Ingredient;
-import udarnicka.ingredients.crud.domain.ports.IngredientId;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class IngredientTest {

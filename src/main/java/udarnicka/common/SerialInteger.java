@@ -7,8 +7,6 @@ public final class SerialInteger {
 
     private int inner;
 
-    private static final SerialInteger ONE = new SerialInteger(1);
-
     public SerialInteger(int value) {
         if(value < 1) {
             throw new IllegalArgumentException("The serial integer must be greater than or equals to one");

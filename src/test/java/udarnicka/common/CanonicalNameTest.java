@@ -1,7 +1,6 @@
 package udarnicka.common;
 
 import jdk.jfr.Description;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;

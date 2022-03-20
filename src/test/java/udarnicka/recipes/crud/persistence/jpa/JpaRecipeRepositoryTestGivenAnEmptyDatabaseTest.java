@@ -9,12 +9,16 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import udarnicka.recipes.crud.persistence.RecipeRepositoryAbstractBaseTestGivenAnEmptyDatabase;
+import udarnicka.common.CanonicalName;
+import udarnicka.recipes.crud.domain.ports.RecipeRepository;
+import udarnicka.recipes.crud.persistence.RecipeRepositoryEmptyDatabaseTest;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Testcontainers
-public class JpaRecipeRepositoryTestGivenAnEmptyDatabaseTest extends RecipeRepositoryAbstractBaseTestGivenAnEmptyDatabase<RecipeJpaEntity, SpringDataRecipeRepository> {
+public class JpaRecipeRepositoryTestGivenAnEmptyDatabaseTest implements RecipeRepositoryEmptyDatabaseTest {
 
     @Container
     private static final PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:14");
@@ -29,10 +33,29 @@ public class JpaRecipeRepositoryTestGivenAnEmptyDatabaseTest extends RecipeRepos
     @Autowired
     private SpringDataRecipeRepository springDataRecipeRepository;
 
+    private RecipeRepository recipeRepository;
+
     @BeforeEach
     protected void setup() {
         this.recipeRepository = new JpaRecipeRepository(springDataRecipeRepository);
-        this.dataSource = springDataRecipeRepository;
     }
 
+    @Override
+    public RecipeRepository getRepository() {
+        return recipeRepository;
+    }
+
+    @Override
+    public Runnable databaseContentChecker() {
+        return () -> {
+            int recipeCount = 0;
+            for(RecipeJpaEntity recipeInDb : springDataRecipeRepository.findAll()) {
+                assertThat(recipeInDb.getId()).isNotNull();
+                assertThat(recipeInDb.getCanonicalName()).isEqualTo(new CanonicalName("Pizza Margarita"));
+                assertThat(recipeInDb.getCanonicalName().getOriginal()).isEqualTo("Pizza Margarita");
+                recipeCount++;
+            }
+            assertThat(recipeCount).isEqualTo(1);
+        };
+    }
 }

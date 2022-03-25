@@ -33,11 +33,15 @@ public class JpaRecipeRepositoryTestGivenAnEmptyDatabaseTest implements RecipeRe
     @Autowired
     private SpringDataRecipeRepository springDataRecipeRepository;
 
+    @Autowired
+    private SpringDataRecipeStepRepository springDataRecipeStepRepository;
+
     private RecipeRepository recipeRepository;
 
     @BeforeEach
     protected void setup() {
-        this.recipeRepository = new JpaRecipeRepository(springDataRecipeRepository);
+        this.recipeRepository = new JpaRecipeRepository(springDataRecipeRepository,
+                springDataRecipeStepRepository);
     }
 
     @Override

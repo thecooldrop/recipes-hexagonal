@@ -1,2 +1,5 @@
-package udarnicka.recipes.crud.persistence.jpa;public class VolumetricIngredientUnits {
+package udarnicka.recipes.crud.persistence.jpa;
+
+public enum VolumetricIngredientUnits {
+    LITER, MILLILITER
 }

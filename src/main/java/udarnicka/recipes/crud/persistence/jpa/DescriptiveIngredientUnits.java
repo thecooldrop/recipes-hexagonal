@@ -1,2 +1,5 @@
-package udarnicka.recipes.crud.persistence.jpa;public class DescriptiveIngredientUnits {
+package udarnicka.recipes.crud.persistence.jpa;
+
+public enum DescriptiveIngredientUnits {
+    PINCH, TO_TASTE, PARTS
 }

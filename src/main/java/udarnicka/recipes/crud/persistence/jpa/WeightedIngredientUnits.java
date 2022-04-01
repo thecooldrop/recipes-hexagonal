@@ -1,2 +1,5 @@
-package udarnicka.recipes.crud.persistence.jpa;public class WeightedIngredientUnits {
+package udarnicka.recipes.crud.persistence.jpa;
+
+public enum WeightedIngredientUnits {
+    GRAM, KILOGRAM
 }

@@ -6,6 +6,7 @@ import lombok.NonNull;
 import lombok.ToString;
 import udarnicka.ingredients.crud.domain.ports.Ingredient;
 
+import javax.measure.Quantity;
 import javax.measure.quantity.Volume;
 
 /**
@@ -18,10 +19,10 @@ import javax.measure.quantity.Volume;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class VolumetricIngredients {
+public class VolumetricIngredient {
 
     @NonNull
-    private final Volume volume;
+    private final Quantity<Volume> volume;
 
     @NonNull
     private final Ingredient ingredient;

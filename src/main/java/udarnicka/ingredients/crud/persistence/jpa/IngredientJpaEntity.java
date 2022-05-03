@@ -9,7 +9,8 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "ingredients")
 @Getter
-class IngredientJpaEntity {
+@Embeddable
+public class IngredientJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

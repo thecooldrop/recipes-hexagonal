@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.ToString;
 import udarnicka.ingredients.crud.domain.ports.Ingredient;
 
+import javax.measure.Quantity;
 import javax.measure.quantity.Mass;
 
 @AllArgsConstructor
@@ -13,7 +14,7 @@ import javax.measure.quantity.Mass;
 public class WeightedIngredient {
 
     @NonNull
-    private final Mass mass;
+    private final Quantity<Mass> mass;
 
     @NonNull
     private final Ingredient ingredient;

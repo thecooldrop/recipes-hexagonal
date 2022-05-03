@@ -17,14 +17,14 @@ public class Recipe {
     private final List<RecipeStep> recipeSteps;
     private final List<DescriptiveIngredient> descriptiveIngredients;
     private final List<WeightedIngredient> weightedIngredients;
-    private final List<VolumetricIngredients> volumetricIngredients;
+    private final List<VolumetricIngredient> volumetricIngredients;
 
     public Recipe(@NonNull String name,
                   @NonNull RecipeId id,
                   @NonNull List<RecipeStep> recipeSteps,
                   @NonNull List<DescriptiveIngredient> descriptiveIngredients,
                   @NonNull List<WeightedIngredient> weightedIngredients,
-                  @NonNull List<VolumetricIngredients> volumetricIngredients) {
+                  @NonNull List<VolumetricIngredient> volumetricIngredients) {
         this.descriptiveIngredients = descriptiveIngredients;
         this.weightedIngredients = weightedIngredients;
         this.volumetricIngredients = volumetricIngredients;

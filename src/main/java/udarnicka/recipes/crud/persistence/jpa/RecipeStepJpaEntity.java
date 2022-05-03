@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Entity
+@Embeddable
 @Table(name = "recipe_steps")
 @Setter
 public class RecipeStepJpaEntity {

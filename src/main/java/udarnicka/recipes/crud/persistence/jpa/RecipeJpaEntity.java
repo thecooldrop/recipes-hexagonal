@@ -9,6 +9,8 @@ import udarnicka.common.HasId;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "recipes")
@@ -27,6 +29,15 @@ class RecipeJpaEntity implements HasId<Integer>, HasCanonicalName {
     @Column(name = "canonical_name", nullable = false)
     @NotBlank
     private String canonicalName;
+
+    @OneToMany
+    @OrderBy("stepOrderIndex ASC")
+    @Getter
+    private List<RecipeStepJpaEntity> recipeSteps;
+
+    @OneToMany
+    @Getter
+    private Set<RecipeMeasuredIngredientJpaEntity> recipeMeasuredIngredients;
 
     private transient CanonicalName transientCanonicalName;
 

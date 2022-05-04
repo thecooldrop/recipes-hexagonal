@@ -11,6 +11,14 @@ public class IngredientCrud {
 
     final Optional<Ingredient> readById(IngredientId id) {
         // TODO: Complete the implementation
-        return Optional.empty();
+        return ingredientRepository.readById(id);
+    }
+
+    final Ingredient create(IngredientName ingredientToCreate) {
+        return ingredientRepository.save(ingredientToCreate);
+    }
+
+    final void delete(IngredientId id) {
+        ingredientRepository.delete(id);
     }
 }

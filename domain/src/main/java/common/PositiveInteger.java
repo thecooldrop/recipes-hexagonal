@@ -1,5 +1,8 @@
 package common;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public class PositiveInteger {
 
     private final Integer internal;
@@ -12,4 +15,5 @@ public class PositiveInteger {
         }
         this.internal = number;
     }
+
 }

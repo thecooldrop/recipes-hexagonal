@@ -1,0 +1,19 @@
+package recipes.crud.api;
+
+import ingredients.crud.api.Ingredient;
+import lombok.NonNull;
+
+/**
+ * Ingredient, whose amount can only be described in words. Examples of such ingredients would be spices, which
+ * are usually described as "to taste", or "a pinch"
+ */
+public class DescriptiveIngredient {
+
+    private final String description;
+    private final Ingredient ingredient;
+
+    public DescriptiveIngredient(@NonNull String description, @NonNull Ingredient ingredient) {
+        this.description = description;
+        this.ingredient = ingredient;
+    }
+}

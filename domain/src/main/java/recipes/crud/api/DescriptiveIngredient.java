@@ -1,6 +1,7 @@
 package recipes.crud.api;
 
 import ingredients.crud.api.Ingredient;
+import ingredients.crud.api.IngredientId;
 import lombok.NonNull;
 
 /**
@@ -10,9 +11,9 @@ import lombok.NonNull;
 public class DescriptiveIngredient {
 
     private final String description;
-    private final Ingredient ingredient;
+    private final IngredientId ingredient;
 
-    public DescriptiveIngredient(@NonNull String description, @NonNull Ingredient ingredient) {
+    public DescriptiveIngredient(@NonNull String description, @NonNull IngredientId ingredient) {
         this.description = description;
         this.ingredient = ingredient;
     }

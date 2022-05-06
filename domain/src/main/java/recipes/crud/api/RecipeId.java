@@ -1,4 +1,4 @@
-package recipes.crud;
+package recipes.crud.api;
 
 import common.PositiveInteger;
 import lombok.EqualsAndHashCode;

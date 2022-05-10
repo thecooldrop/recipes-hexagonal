@@ -13,15 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class IngredientCrudUsecaseTest {
 
-    private IngredientCrud componentUnderTest;
-
-    private IngredientRepository inMemoryIngredientRepository;
-
-    @BeforeEach
-    private void setupComponentUnderTest() {
-        inMemoryIngredientRepository = new InMemoryIngredientRepository();
-        this.componentUnderTest = new IngredientCrud(inMemoryIngredientRepository);
-    }
+    private final IngredientRepository inMemoryIngredientRepository = new InMemoryIngredientRepository();
+    private final IngredientCrud componentUnderTest = new IngredientCrud(inMemoryIngredientRepository);
 
     @Nested
     class NoIngredientsSaved {

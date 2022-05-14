@@ -3,8 +3,9 @@ package plans.grocerylist.api;
 import ingredients.crud.api.IngredientId;
 import recipes.crud.api.RecipeId;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Set;
 
 public interface GroceryListRepository {
-    List<IngredientId> readGroceryList(List<RecipeId> recipeIds);
+    Set<IngredientId> readGroceryList(Collection<RecipeId> recipeIds);
 }

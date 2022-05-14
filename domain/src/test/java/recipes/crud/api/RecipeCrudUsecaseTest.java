@@ -40,10 +40,6 @@ public class RecipeCrudUsecaseTest {
             CountableIngredient starsOfAnise = new CountableIngredient(5, new IngredientId(new PositiveInteger(2)));
             List<CountableIngredient> countableIngredients = List.of(vanillaSticks, starsOfAnise);
 
-            DescriptiveIngredient pinchOfSalt = new DescriptiveIngredient("pinch", new IngredientId(new PositiveInteger(3)));
-            DescriptiveIngredient pepperToTaste = new DescriptiveIngredient("to taste", new IngredientId(new PositiveInteger(4)));
-            List<DescriptiveIngredient> descriptiveIngredients = List.of(pepperToTaste,pinchOfSalt);
-
             VolumetricIngredient water = new VolumetricIngredient(Quantities.getQuantity(250, Units.LITRE).divide(1000), new IngredientId(new PositiveInteger(4)));
             VolumetricIngredient milk = new VolumetricIngredient(Quantities.getQuantity(250, Units.LITRE).divide(1000), new IngredientId(new PositiveInteger(5)));
             List<VolumetricIngredient> volumetricIngredients = List.of(water, milk);
@@ -57,7 +53,6 @@ public class RecipeCrudUsecaseTest {
                     name,
                     steps,
                     countableIngredients,
-                    descriptiveIngredients,
                     weightedIngredients,
                     volumetricIngredients
             );
@@ -65,7 +60,6 @@ public class RecipeCrudUsecaseTest {
             createCommand = new CreateRecipeCommand(name,
                     steps,
                     countableIngredients,
-                    descriptiveIngredients,
                     weightedIngredients,
                     volumetricIngredients);
         }
@@ -82,7 +76,6 @@ public class RecipeCrudUsecaseTest {
             assertEquals(recipeToCreate.recipeName, createdRecipe.recipeName);
             assertEquals(recipeToCreate.steps, createdRecipe.steps);
             assertEquals(recipeToCreate.countableIngredients, createdRecipe.countableIngredients);
-            assertEquals(recipeToCreate.descriptiveIngredients, createdRecipe.descriptiveIngredients);
             assertEquals(recipeToCreate.weightedIngredients, createdRecipe.weightedIngredients);
             assertEquals(recipeToCreate.volumetricIngredients, createdRecipe.volumetricIngredients);
 
@@ -100,7 +93,6 @@ public class RecipeCrudUsecaseTest {
         private CreateRecipeCommand createRecipeCommand;
         private RecipeName expectedRecipeName;
         private List<RecipeStep> expectedRecipeSteps;
-        private List<DescriptiveIngredient> expectedDescriptiveIngredients;
         private List<CountableIngredient> expectedCountableIngredients;
         private List<WeightedIngredient> expectedWeightedIngredients;
         private List<VolumetricIngredient> expectedVolumetricIngredients;
@@ -134,12 +126,6 @@ public class RecipeCrudUsecaseTest {
                     new CountableIngredient(1, new IngredientId(new PositiveInteger(5)))
             );
 
-            expectedDescriptiveIngredients = List.of();
-            List<DescriptiveIngredient> secondRecipeDescriptiveIngredients = List.of(
-                    new DescriptiveIngredient("Pinch", new IngredientId(new PositiveInteger(6)))
-            );
-            List<DescriptiveIngredient> thirdRecipeDescriptiveIngredients = secondRecipeDescriptiveIngredients;
-
             expectedWeightedIngredients = List.of(
                     new WeightedIngredient(Quantities.getQuantity(100, Units.GRAM), new IngredientId(new PositiveInteger(11))),
                     new WeightedIngredient(Quantities.getQuantity(250, Units.GRAM), new IngredientId(new PositiveInteger(12))),
@@ -159,9 +145,9 @@ public class RecipeCrudUsecaseTest {
             );
             List<VolumetricIngredient> thirdRecipeVolumetricIngredients = List.of();
 
-            createRecipeCommand = new CreateRecipeCommand(expectedRecipeName, expectedRecipeSteps, expectedCountableIngredients, expectedDescriptiveIngredients, expectedWeightedIngredients, expectedVolumetricIngredients);
-            CreateRecipeCommand createSecondRecipe = new CreateRecipeCommand(secondRecipeName, secondRecipeSteps, secondRecipeCountableIngredients, secondRecipeDescriptiveIngredients, secondRecipeWeightedIngredients, secondRecipeVolumetricIngredients);
-            CreateRecipeCommand createThirdRecipe = new CreateRecipeCommand(thirdRecipeName, thirdRecipeSteps, thirdRecipeCountableIngredients, thirdRecipeDescriptiveIngredients, thirdRecipeWeightedIngredients, thirdRecipeVolumetricIngredients );
+            createRecipeCommand = new CreateRecipeCommand(expectedRecipeName, expectedRecipeSteps, expectedCountableIngredients, expectedWeightedIngredients, expectedVolumetricIngredients);
+            CreateRecipeCommand createSecondRecipe = new CreateRecipeCommand(secondRecipeName, secondRecipeSteps, secondRecipeCountableIngredients, secondRecipeWeightedIngredients, secondRecipeVolumetricIngredients);
+            CreateRecipeCommand createThirdRecipe = new CreateRecipeCommand(thirdRecipeName, thirdRecipeSteps, thirdRecipeCountableIngredients, thirdRecipeWeightedIngredients, thirdRecipeVolumetricIngredients );
 
             firstRecipe = inMemoryRepository.save(createSecondRecipe);
             secondRecipe = inMemoryRepository.save(createThirdRecipe);
@@ -181,7 +167,6 @@ public class RecipeCrudUsecaseTest {
             assertEquals(expectedRecipeName, savedRecipe.recipeName);
             assertEquals(expectedRecipeSteps, savedRecipe.steps);
             assertEquals(expectedCountableIngredients, savedRecipe.countableIngredients);
-            assertEquals(expectedDescriptiveIngredients, savedRecipe.descriptiveIngredients);
             assertEquals(expectedWeightedIngredients, savedRecipe.weightedIngredients);
             assertEquals(expectedVolumetricIngredients, savedRecipe.volumetricIngredients);
 

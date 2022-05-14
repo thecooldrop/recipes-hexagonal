@@ -19,7 +19,7 @@ public class InMemoryRecipeRepository implements RecipeRepository {
     @Override
     public Recipe save(CreateRecipeCommand command) {
         RecipeId id = new RecipeId(new PositiveInteger(sequence));
-        Recipe savedRecipe = new Recipe(id, command.recipeName, command.steps, command.countableIngredients, command.descriptiveIngredients, command.weightedIngredients, command.volumetricIngredients);
+        Recipe savedRecipe = new Recipe(id, command.recipeName, command.steps, command.countableIngredients, command.weightedIngredients, command.volumetricIngredients);
         recipes.values()
                 .stream()
                 .filter(elem -> elem.recipeName.equals(command.recipeName))

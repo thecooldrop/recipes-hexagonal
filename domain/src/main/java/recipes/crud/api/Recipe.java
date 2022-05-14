@@ -14,17 +14,15 @@ public class Recipe {
     public final List<RecipeStep> steps;
 
     public final List<CountableIngredient> countableIngredients;
-    public final List<DescriptiveIngredient> descriptiveIngredients;
     public final List<WeightedIngredient> weightedIngredients;
     public final List<VolumetricIngredient> volumetricIngredients;
 
 
-    public Recipe(@NonNull RecipeId id, @NonNull RecipeName name, @NonNull List<RecipeStep> steps, @NonNull List<CountableIngredient> countableIngredients, @NonNull List<DescriptiveIngredient> descriptiveIngredients, @NonNull List<WeightedIngredient> weightedIngredients, @NonNull List<VolumetricIngredient> volumetricIngredients) {
+    public Recipe(@NonNull RecipeId id, @NonNull RecipeName name, @NonNull List<RecipeStep> steps, @NonNull List<CountableIngredient> countableIngredients, @NonNull List<WeightedIngredient> weightedIngredients, @NonNull List<VolumetricIngredient> volumetricIngredients) {
         this.id = id;
         this.recipeName = name;
         this.steps = steps;
         this.countableIngredients = countableIngredients;
-        this.descriptiveIngredients = descriptiveIngredients;
         this.weightedIngredients = weightedIngredients;
         this.volumetricIngredients = volumetricIngredients;
     }

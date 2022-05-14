@@ -11,15 +11,13 @@ public class CreateRecipeCommand {
     public final RecipeName recipeName;
     public final List<RecipeStep> steps;
     public final List<CountableIngredient> countableIngredients;
-    public final List<DescriptiveIngredient> descriptiveIngredients;
     public final List<WeightedIngredient> weightedIngredients;
     public final List<VolumetricIngredient> volumetricIngredients;
 
-    public CreateRecipeCommand(@NonNull RecipeName recipeName, @NonNull List<RecipeStep> steps, @NonNull List<CountableIngredient> countableIngredients, @NonNull List<DescriptiveIngredient> descriptiveIngredients, @NonNull List<WeightedIngredient> weightedIngredients, @NonNull List<VolumetricIngredient> volumetricIngredients) {
+    public CreateRecipeCommand(@NonNull RecipeName recipeName, @NonNull List<RecipeStep> steps, @NonNull List<CountableIngredient> countableIngredients, @NonNull List<WeightedIngredient> weightedIngredients, @NonNull List<VolumetricIngredient> volumetricIngredients) {
         this.recipeName = recipeName;
         this.steps = steps;
         this.countableIngredients = countableIngredients;
-        this.descriptiveIngredients = descriptiveIngredients;
         this.weightedIngredients = weightedIngredients;
         this.volumetricIngredients = volumetricIngredients;
     }

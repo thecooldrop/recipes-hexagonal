@@ -10,7 +10,6 @@ public class IngredientCrud {
     }
 
     final Optional<Ingredient> readById(IngredientId id) {
-        // TODO: Complete the implementation
         return ingredientRepository.readById(id);
     }
 

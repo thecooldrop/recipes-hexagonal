@@ -1,6 +1,5 @@
 package recipes.crud.api;
 
-import ingredients.crud.api.Ingredient;
 import ingredients.crud.api.IngredientId;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;

@@ -13,4 +13,5 @@ public class Ingredient {
         this.id = id;
         this.name = name;
     }
+
 }

@@ -9,15 +9,15 @@ public class IngredientCrud {
         this.ingredientRepository = ingredientRepository;
     }
 
-    final Optional<Ingredient> readById(IngredientId id) {
+    public final Optional<Ingredient> readById(IngredientId id) {
         return ingredientRepository.readById(id);
     }
 
-    final Ingredient create(IngredientName ingredientToCreate) {
+    public final Ingredient create(IngredientName ingredientToCreate) {
         return ingredientRepository.save(ingredientToCreate);
     }
 
-    final void delete(IngredientId id) {
+    public final void delete(IngredientId id) {
         ingredientRepository.delete(id);
     }
 }

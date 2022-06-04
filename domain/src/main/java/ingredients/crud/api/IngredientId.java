@@ -14,4 +14,8 @@ public class IngredientId {
     public IngredientId(@NonNull PositiveInteger positiveInteger) {
         this.internal = positiveInteger;
     }
+
+    public Integer asInteger() {
+        return internal.asInteger();
+    }
 }

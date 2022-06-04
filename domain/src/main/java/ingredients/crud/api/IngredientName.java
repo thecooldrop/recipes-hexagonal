@@ -19,4 +19,8 @@ public class IngredientName {
         }
         this.name = name;
     }
+
+    public String asString() {
+        return name;
+    }
 }

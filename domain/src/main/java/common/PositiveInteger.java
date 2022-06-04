@@ -16,4 +16,7 @@ public class PositiveInteger {
         this.internal = number;
     }
 
+    public Integer asInteger() {
+        return internal;
+    }
 }

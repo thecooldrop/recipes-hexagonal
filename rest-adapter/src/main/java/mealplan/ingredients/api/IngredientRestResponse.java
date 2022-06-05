@@ -1,4 +1,4 @@
-package recipes.ingredients.api;
+package mealplan.ingredients.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

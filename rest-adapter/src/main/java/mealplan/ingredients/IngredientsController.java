@@ -1,9 +1,9 @@
-package recipes.ingredients;
+package mealplan.ingredients;
 
 import common.PositiveInteger;
 import ingredients.crud.api.IngredientName;
 import org.springframework.web.bind.annotation.*;
-import recipes.ingredients.api.IngredientRestResponse;
+import mealplan.ingredients.api.IngredientRestResponse;
 import ingredients.crud.api.Ingredient;
 import ingredients.crud.api.IngredientCrud;
 import ingredients.crud.api.IngredientId;

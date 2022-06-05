@@ -1,4 +1,4 @@
-package recipes.ingredients;
+package mealplan.ingredients;
 
 import common.PositiveInteger;
 import ingredients.crud.api.Ingredient;

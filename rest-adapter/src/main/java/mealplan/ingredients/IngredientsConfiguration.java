@@ -1,4 +1,4 @@
-package recipes.ingredients;
+package mealplan.ingredients;
 
 import ingredients.crud.api.IngredientCrud;
 import ingredients.crud.api.IngredientRepository;

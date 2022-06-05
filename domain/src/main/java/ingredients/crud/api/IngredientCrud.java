@@ -1,5 +1,6 @@
 package ingredients.crud.api;
 
+import java.util.List;
 import java.util.Optional;
 
 public class IngredientCrud {
@@ -19,5 +20,9 @@ public class IngredientCrud {
 
     public final void delete(IngredientId id) {
         ingredientRepository.delete(id);
+    }
+
+    public final List<Ingredient> read() {
+        return ingredientRepository.read();
     }
 }

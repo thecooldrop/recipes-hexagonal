@@ -4,6 +4,7 @@ import common.PositiveInteger;
 import ingredients.crud.api.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -26,6 +27,11 @@ public class InMemoryIngredientRepository implements IngredientRepository {
         ingredients.put(id, newIngredient);
         sequence++;
         return newIngredient;
+    }
+
+    @Override
+    public List<Ingredient> read() {
+        return ingredients.values().stream().toList();
     }
 
     @Override

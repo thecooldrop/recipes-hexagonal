@@ -10,6 +10,7 @@ import ingredients.crud.api.IngredientId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -34,5 +35,14 @@ public class IngredientsController {
         Ingredient ingredient = ingredientCrud.create(new IngredientName(ingredientName));
         IngredientRestResponse ingredientRestResponse = new IngredientRestResponse(ingredient.id.asInteger(), ingredient.name.asString());
         return ResponseEntity.ok(ingredientRestResponse);
+    }
+
+    @GetMapping(path="/ingredients")
+    public ResponseEntity<List<IngredientRestResponse>> get() {
+        List<IngredientRestResponse> response = ingredientCrud.read()
+                .stream()
+                .map(elem -> new IngredientRestResponse(elem.id.asInteger(), elem.name.asString()))
+                .toList();
+        return ResponseEntity.ok(response);
     }
 }

@@ -32,6 +32,8 @@ public class IngredientJdbcRepository implements IngredientRepository {
 
     private final PreparedStatementCreatorFactory saveIngredientPreparedStatementCreatorFactory = new PreparedStatementCreatorFactory("INSERT INTO ingredients (name, canonical) VALUES (?,?)", Types.VARCHAR, Types.VARCHAR);
 
+    private final PreparedStatementCreatorFactory deleteIngredientPreparedStatementCreatorFactory = new PreparedStatementCreatorFactory("DELETE FROM ingredients WHERE id = ?", Types.INTEGER);
+
     public IngredientJdbcRepository(JdbcTemplate template) {
         this.template = template;
         saveIngredientPreparedStatementCreatorFactory.setReturnGeneratedKeys(true);
@@ -63,7 +65,7 @@ public class IngredientJdbcRepository implements IngredientRepository {
 
     @Override
     public void delete(IngredientId id) {
-
+        template.update(deleteIngredientPreparedStatementCreatorFactory.newPreparedStatementCreator(List.of(id.asInteger())));
     }
 
     @Override

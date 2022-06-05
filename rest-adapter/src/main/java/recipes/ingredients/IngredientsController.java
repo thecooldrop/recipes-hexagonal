@@ -45,4 +45,10 @@ public class IngredientsController {
                 .toList();
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping(path="/ingredients/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
+        ingredientCrud.delete(new IngredientId(new PositiveInteger(id)));
+        return ResponseEntity.ok(null);
+    }
 }

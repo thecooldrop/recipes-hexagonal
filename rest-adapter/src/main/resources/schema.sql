@@ -1,5 +1,5 @@
 create table ingredients(
-    id primary key,
+    id identity primary key,
     name varchar not null,
     canonical varchar unique not null
 );

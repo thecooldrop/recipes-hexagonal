@@ -5,7 +5,6 @@ import ingredients.crud.api.Ingredient;
 import ingredients.crud.api.IngredientId;
 import ingredients.crud.api.IngredientName;
 import ingredients.crud.api.IngredientRepository;
-import lombok.NonNull;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
@@ -23,7 +22,7 @@ public class IngredientJdbcRepository implements IngredientRepository {
 
     private final PreparedStatementCreatorFactory readByIdPreparedStatementCreatorFactory = new PreparedStatementCreatorFactory("SELECT id,name from ingredients where id = ?", Types.INTEGER);
 
-    private final RowMapper<Ingredient> readByIdRowMapper = (rs, row) -> {
+    private final RowMapper<Ingredient> rowToIngredientMapper = (rs, row) -> {
         Integer id = rs.getInt(1);
         String name = rs.getString(2);
         IngredientId ingredientId = new IngredientId(new PositiveInteger(id));
@@ -33,15 +32,15 @@ public class IngredientJdbcRepository implements IngredientRepository {
 
     private final PreparedStatementCreatorFactory saveIngredientPreparedStatementCreatorFactory = new PreparedStatementCreatorFactory("INSERT INTO ingredients (name, canonical) VALUES (?,?)", Types.VARCHAR, Types.VARCHAR);
 
-
     public IngredientJdbcRepository(JdbcTemplate template) {
         this.template = template;
+        saveIngredientPreparedStatementCreatorFactory.setReturnGeneratedKeys(true);
     }
 
     @Override
     public Optional<Ingredient> readById(IngredientId id) {
         PreparedStatementCreator readById = readByIdPreparedStatementCreatorFactory.newPreparedStatementCreator(List.of(id.asInteger()));
-        List<Ingredient> ingredients = template.query(readById, readByIdRowMapper);
+        List<Ingredient> ingredients = template.query(readById, rowToIngredientMapper);
         return ingredients.stream().findFirst();
     }
 
@@ -65,5 +64,10 @@ public class IngredientJdbcRepository implements IngredientRepository {
     @Override
     public void delete(IngredientId id) {
 
+    }
+
+    @Override
+    public List<Ingredient> read() {
+        return template.query("select id,name from ingredients", rowToIngredientMapper);
     }
 }

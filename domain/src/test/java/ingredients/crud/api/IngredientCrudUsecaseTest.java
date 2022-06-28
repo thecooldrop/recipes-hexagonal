@@ -26,7 +26,6 @@ public class IngredientCrudUsecaseTest {
         }
 
 
-        // TODO: Writing the ingredient enables us to read it via repository again
         @Test
         void writingTheIngredientMakesItRetrievableByRepository() {
             Ingredient writtenIngredient = componentUnderTest.create(new IngredientName("Pizza"));
@@ -46,22 +45,17 @@ public class IngredientCrudUsecaseTest {
             savedIngredient = inMemoryIngredientRepository.save(flour);
         }
 
-        // TODO: Existing ingredient can be read
         @Test
         void exisitingIngredientCanBeRead() {
             assertEquals(Optional.of(savedIngredient), componentUnderTest.readById(savedIngredient.id));
         }
 
-        // TODO: Write IngredientRepository interface test which ensures that trying to save an existing ingredient
-        //       results in an exception
         @Test
         void tryingToSaveAnExistingIngredientResultsInAnException() {
             assertThrows(DuplicateIngredientException.class, () -> componentUnderTest.create(savedIngredient.name));
         }
 
 
-        // TODO: Write IngredientRepository interface test which ensures that trying to read deleted ingredient
-        //       does not work.
         @Test
         void deletingAnIngredientMakesItUnreadable() {
             componentUnderTest.delete(savedIngredient.id);

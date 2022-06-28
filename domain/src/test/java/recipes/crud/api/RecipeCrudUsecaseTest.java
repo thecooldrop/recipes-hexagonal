@@ -36,8 +36,8 @@ public class RecipeCrudUsecaseTest {
             RecipeStep thirdStep = new RecipeStep("Third");
             List<RecipeStep> steps = List.of(firstStep, secondStep, thirdStep);
 
-            CountableIngredient vanillaSticks = new CountableIngredient(2, new IngredientId(new PositiveInteger(1)));
-            CountableIngredient starsOfAnise = new CountableIngredient(5, new IngredientId(new PositiveInteger(2)));
+            CountableIngredient vanillaSticks = new CountableIngredient(new PositiveInteger(2), new IngredientId(new PositiveInteger(1)));
+            CountableIngredient starsOfAnise = new CountableIngredient(new PositiveInteger(5), new IngredientId(new PositiveInteger(2)));
             List<CountableIngredient> countableIngredients = List.of(vanillaSticks, starsOfAnise);
 
             VolumetricIngredient water = new VolumetricIngredient(Quantities.getQuantity(250, Units.LITRE).divide(1000), new IngredientId(new PositiveInteger(4)));
@@ -114,16 +114,16 @@ public class RecipeCrudUsecaseTest {
             List<RecipeStep> thirdRecipeSteps = List.of(new RecipeStep("First step of third recipe"));
 
             expectedCountableIngredients = List.of(
-                    new CountableIngredient(1, new IngredientId(new PositiveInteger(1))),
-                    new CountableIngredient(2, new IngredientId(new PositiveInteger(2))),
-                    new CountableIngredient(3, new IngredientId(new PositiveInteger(3)))
+                    new CountableIngredient(new PositiveInteger(1), new IngredientId(new PositiveInteger(1))),
+                    new CountableIngredient(new PositiveInteger(2), new IngredientId(new PositiveInteger(2))),
+                    new CountableIngredient(new PositiveInteger(3), new IngredientId(new PositiveInteger(3)))
             );
             List<CountableIngredient> secondRecipeCountableIngredients = List.of(
-                    new CountableIngredient(2, new IngredientId(new PositiveInteger(4)))
+                    new CountableIngredient(new PositiveInteger(2), new IngredientId(new PositiveInteger(4)))
             );
             List<CountableIngredient> thirdRecipeCountableIngredients = List.of(
-                    new CountableIngredient(7, new IngredientId(new PositiveInteger(2))),
-                    new CountableIngredient(1, new IngredientId(new PositiveInteger(5)))
+                    new CountableIngredient(new PositiveInteger(7), new IngredientId(new PositiveInteger(2))),
+                    new CountableIngredient(new PositiveInteger(1), new IngredientId(new PositiveInteger(5)))
             );
 
             expectedWeightedIngredients = List.of(

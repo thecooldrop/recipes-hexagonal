@@ -1,5 +1,6 @@
 package recipes.crud.api;
 
+import common.PositiveInteger;
 import ingredients.crud.api.IngredientId;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -11,10 +12,10 @@ import lombok.NonNull;
 @EqualsAndHashCode
 public class CountableIngredient {
 
-    private final Integer count;
+    private final PositiveInteger count;
     private final IngredientId ingredient;
 
-    public CountableIngredient(@NonNull Integer count, @NonNull IngredientId ingredient) {
+    public CountableIngredient(@NonNull PositiveInteger count, @NonNull IngredientId ingredient) {
         this.count = count;
         this.ingredient = ingredient;
     }

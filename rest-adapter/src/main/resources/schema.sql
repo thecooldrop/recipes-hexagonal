@@ -11,15 +11,14 @@ create table recipes(
 );
 
 create table ingredient_types(
-    id identity primary key,
-    type varchar unique not null check(type = upper(type))
+    type varchar unique not null check(type = upper(type)) primary key
 );
 
 create table type_units(
     id identity primary key,
-    type_id integer not null,
+    type_id varchar not null,
     unit varchar not null check(unit=upper(unit)),
-    foreign key (type_id) references ingredient_types(id),
+    foreign key (type_id) references ingredient_types(type),
     constraint unit_has_single_type unique (type_id, unit)
 );
 

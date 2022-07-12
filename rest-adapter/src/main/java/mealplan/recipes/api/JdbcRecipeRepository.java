@@ -1,5 +1,6 @@
 package mealplan.recipes.api;
 
+import common.PositiveInteger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -93,11 +94,41 @@ public class JdbcRecipeRepository implements RecipeRepository {
 
     @Override
     public Recipe save(CreateRecipeCommand command) {
+
+        Integer id = saveRecipeToDatabase(command.recipeName);
+        persistStepsForRecipe(id, command.steps);
+        persistVolumetricIngerdientsForRecipe(id, command.volumetricIngredients);
+        persistWeightedIngredientsForRecipe(id, command.weightedIngredients);
+        persistCountableIngredientsForRecipe(id, command.countableIngredients);
+        return new Recipe(new RecipeId(new PositiveInteger(id)),
+                command.recipeName,
+                command.steps,
+                command.countableIngredients,
+                command.weightedIngredients,
+                command.volumetricIngredients);
+    }
+
+    private Integer saveRecipeToDatabase(RecipeName name) {
         return null;
+    }
+
+    private void persistStepsForRecipe(Integer recipeId, List<RecipeStep> steps) {
+
+    }
+
+    private void persistVolumetricIngerdientsForRecipe(Integer recipeId, List<VolumetricIngredient> volumetricIngredients) {
+
+    }
+
+    private void persistWeightedIngredientsForRecipe(Integer recipeId, List<WeightedIngredient> weightedIngredients) {
+
+    }
+
+    private void persistCountableIngredientsForRecipe(Integer recipeId, List<CountableIngredient> countableIngredients) {
+
     }
 
     @Override
     public void delete(RecipeId id) {
-
     }
 }
